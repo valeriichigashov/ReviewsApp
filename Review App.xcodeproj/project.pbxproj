@@ -13,6 +13,9 @@
 		787452DC28EEE8F600356591 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 787452DA28EEE8F600356591 /* Main.storyboard */; };
 		787452DE28EEE8F800356591 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 787452DD28EEE8F800356591 /* Assets.xcassets */; };
 		787452E128EEE8F800356591 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 787452DF28EEE8F800356591 /* LaunchScreen.storyboard */; };
+		7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5B28EEF91200721A9C /* CoreDataManager.swift */; };
+		7889EE5E28EEF93E00721A9C /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5D28EEF93E00721A9C /* LoginService.swift */; };
+		7889EE6028EEF95A00721A9C /* ReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5F28EEF95A00721A9C /* ReviewService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		787452DD28EEE8F800356591 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		787452E028EEE8F800356591 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		787452E228EEE8F800356591 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7889EE5B28EEF91200721A9C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		7889EE5D28EEF93E00721A9C /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		7889EE5F28EEF95A00721A9C /* ReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,122 @@
 		787452D328EEE8F600356591 /* Review App */ = {
 			isa = PBXGroup;
 			children = (
-				787452D428EEE8F600356591 /* AppDelegate.swift */,
-				787452D628EEE8F600356591 /* SceneDelegate.swift */,
+				7889EE6128EEFB8F00721A9C /* App */,
+				7889EE4928EEF5A400721A9C /* Models */,
+				7889EE4A28EEF5B200721A9C /* Presentation */,
+				7889EE4B28EEF5D900721A9C /* Business Logic */,
+				7889EE4C28EEF5ED00721A9C /* Utils */,
+				7889EE4D28EEF5F900721A9C /* Resources */,
 				787452D828EEE8F600356591 /* ViewController.swift */,
 				787452DA28EEE8F600356591 /* Main.storyboard */,
+			);
+			path = "Review App";
+			sourceTree = "<group>";
+		};
+		7889EE4928EEF5A400721A9C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7889EE4A28EEF5B200721A9C /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				7889EE4E28EEF6C600721A9C /* Scenes */,
+				7889EE4F28EEF6CF00721A9C /* Views */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		7889EE4B28EEF5D900721A9C /* Business Logic */ = {
+			isa = PBXGroup;
+			children = (
+				7889EE5028EEF70200721A9C /* Database */,
+				7889EE5128EEF71200721A9C /* Network */,
+				7889EE5228EEF72600721A9C /* Services */,
+			);
+			path = "Business Logic";
+			sourceTree = "<group>";
+		};
+		7889EE4C28EEF5ED00721A9C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7889EE5328EEF73B00721A9C /* Extensions */,
+				7889EE5428EEF75100721A9C /* Constants */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		7889EE4D28EEF5F900721A9C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
 				787452DD28EEE8F800356591 /* Assets.xcassets */,
 				787452DF28EEE8F800356591 /* LaunchScreen.storyboard */,
 				787452E228EEE8F800356591 /* Info.plist */,
 			);
-			path = "Review App";
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7889EE4E28EEF6C600721A9C /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		7889EE4F28EEF6CF00721A9C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7889EE5028EEF70200721A9C /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				7889EE5B28EEF91200721A9C /* CoreDataManager.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		7889EE5128EEF71200721A9C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		7889EE5228EEF72600721A9C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7889EE5D28EEF93E00721A9C /* LoginService.swift */,
+				7889EE5F28EEF95A00721A9C /* ReviewService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7889EE5328EEF73B00721A9C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7889EE5428EEF75100721A9C /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		7889EE6128EEFB8F00721A9C /* App */ = {
+			isa = PBXGroup;
+			children = (
+				787452D428EEE8F600356591 /* AppDelegate.swift */,
+				787452D628EEE8F600356591 /* SceneDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +252,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				787452D928EEE8F600356591 /* ViewController.swift in Sources */,
+				7889EE6028EEF95A00721A9C /* ReviewService.swift in Sources */,
 				787452D528EEE8F600356591 /* AppDelegate.swift in Sources */,
+				7889EE5E28EEF93E00721A9C /* LoginService.swift in Sources */,
+				7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */,
 				787452D728EEE8F600356591 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,7 +332,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -270,7 +386,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -288,7 +404,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Review App/Info.plist";
+				INFOPLIST_FILE = "Review App/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -315,7 +431,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Review App/Info.plist";
+				INFOPLIST_FILE = "Review App/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
