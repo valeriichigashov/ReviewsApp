@@ -5,6 +5,7 @@
 //  Created by Валерий on 06.10.2022.
 //
 
+import FirebaseAuth
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -13,10 +14,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        
         guard let _ = (scene as? UIWindowScene) else { return }
+        
+//        if let windowScene = scene as? UIWindowScene {
+//                window = UIWindow(windowScene: windowScene)
+//            let storyboard = UIStoryboard(name: "Auth", bundle: nil)
+//            let newvc = storyboard.instantiateViewController(withIdentifier: "init")
+//            window?.rootViewController = newvc
+//            window?.makeKeyAndVisible()
+//            }
+//        do {
+//            try Auth.auth().signOut()
+//        } catch {
+//            print(error)
+//        }
+//        Auth.auth().signIn(withEmail: "dfsdf@sd.ru", password: "123456") { [weak self] authResult, error in
+//            guard let strongSelf = self else { return }
+//          }
+//        Auth.auth().addStateDidChangeListener { auth, user in
+//            if user == nil {
+//                self.showAuthStoryboard()
+//            }
+//        }
+    }
+    
+    func showAuthStoryboard() {
+        
+        let storyboard = UIStoryboard(name: "Auth", bundle: nil)
+        let newvc = storyboard.instantiateViewController(withIdentifier: "signIn") as! AuthViewController
+        self.window?.rootViewController?.present(newvc, animated: true)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

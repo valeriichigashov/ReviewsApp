@@ -35,6 +35,9 @@
                                 <rect key="frame" x="54" y="296.33333333333331" width="283" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <connections>
+                                    <action selector="inputPassword:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="fsL-Y6-fke"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QpC-9w-0J5">
                                 <rect key="frame" x="76" y="436.33333333333331" width="238" height="16"/>
@@ -52,16 +55,25 @@
                                 <rect key="frame" x="54" y="237.33333333333334" width="283" height="34.000000000000028"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="inputUserName:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="nlK-QS-0xj"/>
+                                </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOW-qS-y4f">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOW-qS-y4f">
                                 <rect key="frame" x="118" y="351.33333333333331" width="154" height="34"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Sign Up"/>
+                                <connections>
+                                    <action selector="enterAuth:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mm8-eb-tGa"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5GV-lU-Wy9">
                                 <rect key="frame" x="129" y="755" width="133.66666666666663" height="34.666666666666629"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Later"/>
+                                <connections>
+                                    <action selector="laterAuth:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Vkq-nR-KsR"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -96,6 +108,7 @@
                     <connections>
                         <outlet property="alreadyHaveAccountLabel" destination="QpC-9w-0J5" id="Ric-RV-t98"/>
                         <outlet property="enterButton" destination="hOW-qS-y4f" id="JJf-wq-hM8"/>
+                        <outlet property="laterButton" destination="5GV-lU-Wy9" id="sJB-dA-AfK"/>
                         <outlet property="mainTitleLabel" destination="gjL-Ck-6lZ" id="17L-Z3-mtd"/>
                         <outlet property="passwordField" destination="hZD-GZ-gcU" id="nWk-dH-fGL"/>
                         <outlet property="switchButton" destination="pu0-Na-Vgl" id="fqb-uG-llx"/>
@@ -106,6 +119,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-613.125" y="-442.6056338028169"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="nGK-N3-do7">
+            <objects>
+                <viewController storyboardIdentifier="init" id="Wlh-mW-KKt" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eCa-wZ-4aA">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5k-8v-fvO">
+                                <rect key="frame" x="143" y="406" width="105" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="m1G-dQ-3QA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NZC-cC-RwN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1572" y="-443"/>
         </scene>
     </scenes>
     <resources>
