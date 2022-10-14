@@ -37,28 +37,7 @@ class AuthViewController: UIViewController {
     }
     
     @IBAction func enterAuth(_ sender: UIButton) {
-//        let name = usernameField.text!
-//        let password = passwordField.text!
-//
-//        if signup {
-//            if (!name.isEmpty && !password.isEmpty) {
-//                Auth.auth().createUser(withEmail: name, password: password) { (result, error) in
-//                    if error == nil {
-//                        if let result = result {
-//                            print(result.user.uid)
-//                        }
-//                    }
-//                }
-//            } else {
-//                showAlert()
-//            }
-//        } else {
-//            if (!name.isEmpty && !password.isEmpty) {
-//
-//            } else {
-//                showAlert()
-//            }
-//        }
+        presenter.enterButtonTapped()
     }
     
     @IBAction func switchAuth(_ sender: UIButton) {
@@ -66,13 +45,8 @@ class AuthViewController: UIViewController {
     }
     
     @IBAction func laterAuth(_ sender: Any) {
+        presenter.laterButtonTapped()
     }
-    
-//    func showAlert() {
-//        let alert = UIAlertController(title: "Error", message: "Fill filds", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-//        present(alert, animated: true, completion: nil)
-//    }
 }
 
 extension AuthViewController: AuthViewInputDelegate {

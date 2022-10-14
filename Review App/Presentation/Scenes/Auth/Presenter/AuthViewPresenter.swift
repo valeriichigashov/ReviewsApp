@@ -106,11 +106,7 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
             validatePassword()
             validateState()
         case.signIn:
-            if password.count == 0 {
-                isPasswordValid = false
-            } else {
-                isPasswordValid = true
-            }
+            password.count == 0 ? (isPasswordValid = false) : (isPasswordValid = true)
             validateState()
         }
     }
@@ -133,7 +129,10 @@ private extension AuthViewPresenter {
             authViewInputDelegate?.showUsernameWarning(message: "")
         } else {
             isUsernameValid = false
-            authViewInputDelegate?.showUsernameWarning(message: "Username nor right")
+            authViewInputDelegate?.showUsernameWarning(message: "Username not right")
+        }
+        if username.count == 0 {
+            authViewInputDelegate?.showUsernameWarning(message: "")
         }
     }
     
@@ -145,6 +144,9 @@ private extension AuthViewPresenter {
         } else {
             isPasswordValid = false
             authViewInputDelegate?.showPasswordWarning(message: "Password not right")
+        }
+        if password.count == 0 {
+            authViewInputDelegate?.showPasswordWarning(message: "")
         }
     }
     

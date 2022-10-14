@@ -6,9 +6,9 @@ extension String {
     
     var isEmail: Bool {
         let pattern = #"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"#
-        let usernameRegex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let usernameRegex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
         let range = NSRange(location: 0, length: self.count)
-        if usernameRegex.firstMatch(in: self, options: [], range: range) != nil {
+        if usernameRegex?.firstMatch(in: self, options: [], range: range) != nil {
             return true
         } else {
             return false
@@ -17,9 +17,9 @@ extension String {
     
     var isPasswordValidate: Bool {
         let pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&#])[A-Za-z\\d$@$!%*?&#]{6,}$"
-        let usernameRegex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let usernameRegex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
         let range = NSRange(location: 0, length: self.count)
-        if usernameRegex.firstMatch(in: self, options: [], range: range) != nil {
+        if usernameRegex?.firstMatch(in: self, options: [], range: range) != nil {
             return true
         } else {
             return false
