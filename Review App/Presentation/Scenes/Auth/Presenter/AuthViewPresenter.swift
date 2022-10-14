@@ -70,27 +70,6 @@ class AuthViewPresenter {
 
 extension AuthViewPresenter: AuthViewOutputDelegate {
     
-    func enterButtonTapped() {
-        //
-    }
-    
-    func laterButtonTapped() {
-        //
-    }
-    
-    
-    func changeAuthType() {
-        switch authType {
-        case .signUp:
-            authType = .signIn
-        case .signIn:
-            authType = .signUp
-        }
-        authViewInputDelegate?.clearData()
-        authViewInputDelegate?.changeViewState(for: authType)
-        authViewInputDelegate?.setStateEnterButton(isEnabled: false)
-    }
-    
     func usernameDidChange(_ text: String?) {
         username = text ?? ""
         
@@ -109,6 +88,28 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
             password.count == 0 ? (isPasswordValid = false) : (isPasswordValid = true)
             validateState()
         }
+    }
+    
+    func enterButtonTapped() {
+        //
+    }
+    
+    func switchAuthButtonTapped() {
+        switch authType {
+        case .signUp:
+            authType = .signIn
+        case .signIn:
+            authType = .signUp
+        }
+        authViewInputDelegate?.clearData()
+        authViewInputDelegate?.changeViewState(for: authType)
+        authViewInputDelegate?.setStateEnterButton(isEnabled: false)
+        isUsernameValid = false
+        isPasswordValid = false
+    }
+    
+    func laterButtonTapped() {
+        //
     }
 }
 

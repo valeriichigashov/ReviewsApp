@@ -41,7 +41,7 @@ class AuthViewController: UIViewController {
     }
     
     @IBAction func switchAuth(_ sender: UIButton) {
-        presenter.changeAuthType()
+        presenter.switchAuthButtonTapped()
     }
     
     @IBAction func laterAuth(_ sender: Any) {
