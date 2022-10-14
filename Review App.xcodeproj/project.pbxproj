@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7873B03328F85155003C9673 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7873B03228F85155003C9673 /* String+Ext.swift */; };
 		787452D528EEE8F600356591 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787452D428EEE8F600356591 /* AppDelegate.swift */; };
 		787452D728EEE8F600356591 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787452D628EEE8F600356591 /* SceneDelegate.swift */; };
 		787452D928EEE8F600356591 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787452D828EEE8F600356591 /* AuthViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7873B03228F85155003C9673 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		787452D128EEE8F600356591 /* Review App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Review App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		787452D428EEE8F600356591 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		787452D628EEE8F600356591 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -56,13 +58,29 @@
 		7872354E28F3F2F400A0F644 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				7873B03028F7E8E2003C9673 /* Presenter */,
+				7873B03128F7E8F1003C9673 /* View */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		7873B03028F7E8E2003C9673 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
 				78754FAA28F5A3110031D2EF /* AuthViewPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		7873B03128F7E8F1003C9673 /* View */ = {
+			isa = PBXGroup;
+			children = (
 				787452D828EEE8F600356591 /* AuthViewController.swift */,
 				78754FAE28F5A4220031D2EF /* AuthViewInputDelegate.swift */,
 				78754FB028F5A4410031D2EF /* AuthViewOutputDelegate.swift */,
 				787452DA28EEE8F600356591 /* Auth.storyboard */,
 			);
-			path = Auth;
+			path = View;
 			sourceTree = "<group>";
 		};
 		787452C828EEE8F600356591 = {
@@ -174,6 +192,7 @@
 		7889EE5328EEF73B00721A9C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				7873B03228F85155003C9673 /* String+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -280,6 +299,7 @@
 				7889EE5E28EEF93E00721A9C /* LoginService.swift in Sources */,
 				7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */,
 				78754FAF28F5A4220031D2EF /* AuthViewInputDelegate.swift in Sources */,
+				7873B03328F85155003C9673 /* String+Ext.swift in Sources */,
 				787452D728EEE8F600356591 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

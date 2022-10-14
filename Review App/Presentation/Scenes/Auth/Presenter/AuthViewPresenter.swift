@@ -1,0 +1,155 @@
+import Foundation
+
+enum AuthType {
+    
+    case signUp
+    case signIn
+    
+    var mainTitle: String {
+        switch self {
+        case .signUp:
+            return "Sign Up"
+        case .signIn:
+            return "Sign In"
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .signUp:
+            return "Sign Up to save your reveiws in a cloud"
+        case .signIn:
+            return "Sign In to save your reveiws in a cloud"
+        }
+    }
+    
+    var isHaveAccount: String {
+        switch self {
+        case .signUp:
+            return "Already have an account?"
+        case .signIn:
+            return "Don't have an account yet?"
+        }
+    }
+    
+    var enterButton: String {
+        switch self {
+        case .signUp:
+            return "Sign Up"
+        case .signIn:
+            return "Sign In"
+        }
+    }
+    
+    var switchButton: String {
+        switch self {
+        case .signUp:
+            return "Sign In"
+        case .signIn:
+            return "Sign Up"
+        }
+    }
+}
+
+class AuthViewPresenter {
+    
+    private var authType: AuthType = .signUp
+    
+    private var username = ""
+    private var password = ""
+    
+    private var isUsernameValid = false
+    private var isPasswordValid = false
+    
+    private weak var authViewInputDelegate: AuthViewInputDelegate?
+    
+    init(authViewInputDelegate: AuthViewInputDelegate) {
+        self.authViewInputDelegate = authViewInputDelegate
+    }
+}
+
+extension AuthViewPresenter: AuthViewOutputDelegate {
+    
+    func enterButtonTapped() {
+        //
+    }
+    
+    func laterButtonTapped() {
+        //
+    }
+    
+    
+    func changeAuthType() {
+        switch authType {
+        case .signUp:
+            authType = .signIn
+        case .signIn:
+            authType = .signUp
+        }
+        authViewInputDelegate?.clearData()
+        authViewInputDelegate?.changeViewState(for: authType)
+        authViewInputDelegate?.setStateEnterButton(isEnabled: false)
+    }
+    
+    func usernameDidChange(_ text: String?) {
+        username = text ?? ""
+        
+        validateUsername()
+        validateState()
+    }
+    
+    func passwordDidChange(_ text: String?) {
+        password = text ?? ""
+        
+        switch authType {
+        case.signUp:
+            validatePassword()
+            validateState()
+        case.signIn:
+            if password.count == 0 {
+                isPasswordValid = false
+            } else {
+                isPasswordValid = true
+            }
+            validateState()
+        }
+    }
+}
+
+private extension AuthViewPresenter {
+    
+    func setAuthViewInputDelegate(authViewInputDelegate: AuthViewInputDelegate?) {
+        self.authViewInputDelegate = authViewInputDelegate
+    }
+    
+    func clearData() {
+        username = ""
+        password = ""
+    }
+    
+    func validateUsername() {
+        if username.isEmail {
+            isUsernameValid = true
+            authViewInputDelegate?.showUsernameWarning(message: "")
+        } else {
+            isUsernameValid = false
+            authViewInputDelegate?.showUsernameWarning(message: "Username nor right")
+        }
+    }
+    
+    func validatePassword() {
+        
+        if password.isPasswordValidate {
+            isPasswordValid = true
+            authViewInputDelegate?.showPasswordWarning(message: "")
+        } else {
+            isPasswordValid = false
+            authViewInputDelegate?.showPasswordWarning(message: "Password not right")
+        }
+    }
+    
+    func validateState() {
+        let isButtonEnabled = isUsernameValid && isPasswordValid
+        authViewInputDelegate?.setStateEnterButton(isEnabled: isButtonEnabled)
+    }
+}
