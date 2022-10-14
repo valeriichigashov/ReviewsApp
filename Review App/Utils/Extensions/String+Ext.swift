@@ -16,7 +16,7 @@ extension String {
     }
     
     var isPasswordValidate: Bool {
-        let pattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&#])[A-Za-z\\d$@$!%*?&#]{6,}$"
+        let pattern = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[@$!%*?&#])[A-Za-z0-9@$!%*?&#]{6,}$"
         let usernameRegex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
         let range = NSRange(location: 0, length: self.count)
         if usernameRegex?.firstMatch(in: self, options: [], range: range) != nil {

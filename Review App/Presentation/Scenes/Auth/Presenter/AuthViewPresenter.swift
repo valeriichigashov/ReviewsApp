@@ -53,6 +53,8 @@ enum AuthType {
 
 class AuthViewPresenter {
     
+    private var authService = AuthService()
+    
     private var authType: AuthType = .signUp
     
     private var username = ""
@@ -85,13 +87,18 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
             validatePassword()
             validateState()
         case.signIn:
-            password.count == 0 ? (isPasswordValid = false) : (isPasswordValid = true)
+            password.isEmpty ? (isPasswordValid = false) : (isPasswordValid = true)
             validateState()
         }
     }
     
     func enterButtonTapped() {
-        //
+        switch authType {
+        case.signUp:
+            authService.registrationNewUser(username: username, password: password)
+        case.signIn:
+            authService.authenticationUser(username: username, password: password)
+        }
     }
     
     func switchAuthButtonTapped() {
