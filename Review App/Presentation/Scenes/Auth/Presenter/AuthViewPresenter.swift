@@ -97,13 +97,13 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
         case.signUp:
             authService.registrationNewUser(username: username, password: password, complition: {
                 if !self.authService.isSignIn {
-                    self.authViewInputDelegate?.showAlert()
+                    self.authViewInputDelegate?.showAlert400()
                 }
             })
         case.signIn:
             authService.authenticationUser(username: username, password: password, complition: {
                 if !self.authService.isSignIn {
-                    self.authViewInputDelegate?.showAlert()
+                    self.authViewInputDelegate?.showAlert401()
                 }
             })
         }

@@ -50,8 +50,14 @@ class AuthViewController: UIViewController {
 
 extension AuthViewController: AuthViewInputDelegate {
     
-    func showAlert() {
-        let alert = UIAlertController(title: "Error", message: "Failed to Sign In", preferredStyle: .alert)
+    func showAlert400() {
+        let alert = UIAlertController(title: "Failed to Sign Up", message: "400. Bad Request", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    func showAlert401() {
+        let alert = UIAlertController(title: "Failed to Sign In", message: "401. Authorization Required", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         present(alert, animated: true)
     }
