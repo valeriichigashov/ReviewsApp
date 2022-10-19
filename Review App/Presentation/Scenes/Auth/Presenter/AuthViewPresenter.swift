@@ -95,9 +95,17 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
     func enterButtonTapped() {
         switch authType {
         case.signUp:
-            authService.registrationNewUser(username: username, password: password)
+            authService.registrationNewUser(username: username, password: password, complition: {
+                if !self.authService.isSignIn {
+                    self.authViewInputDelegate?.showAlert()
+                }
+            })
         case.signIn:
-            authService.authenticationUser(username: username, password: password)
+            authService.authenticationUser(username: username, password: password, complition: {
+                if !self.authService.isSignIn {
+                    self.authViewInputDelegate?.showAlert()
+                }
+            })
         }
     }
     
@@ -116,7 +124,7 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
     }
     
     func laterButtonTapped() {
-        //
+        authService.signOut()
     }
 }
 

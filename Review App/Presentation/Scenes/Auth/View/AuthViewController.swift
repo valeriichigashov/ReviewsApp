@@ -1,5 +1,4 @@
 import UIKit
-import Firebase
 
 class AuthViewController: UIViewController {
 
@@ -50,6 +49,12 @@ class AuthViewController: UIViewController {
 }
 
 extension AuthViewController: AuthViewInputDelegate {
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Error", message: "Failed to Sign In", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
     
     func setStateEnterButton(isEnabled: Bool) {
         enterButton.isEnabled = isEnabled
