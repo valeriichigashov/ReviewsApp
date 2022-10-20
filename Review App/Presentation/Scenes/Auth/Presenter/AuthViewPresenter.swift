@@ -99,7 +99,12 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
                 guard let self = self else { return }
                 switch result {
                 case .success(_):
-                    self.authViewInputDelegate?.showNewInterface()
+                    self.authType = .signIn
+                    self.authViewInputDelegate?.clearData()
+                    self.authViewInputDelegate?.changeViewState(for: self.authType)
+                    self.authViewInputDelegate?.setStateEnterButton(isEnabled: false)
+                    self.isUsernameValid = false
+                    self.isPasswordValid = false
                 case .failure(let error):
                     self.authViewInputDelegate?.showAlert(title: "Failed to Sign Up", message: error.localizedDescription)
                 }
@@ -115,7 +120,6 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
                 }
             })
         }
-        print(authService.isSignIn)
     }
     
     func switchAuthButtonTapped() {
