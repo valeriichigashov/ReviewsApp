@@ -17,6 +17,8 @@
 		78754FAB28F5A3110031D2EF /* AuthViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78754FAA28F5A3110031D2EF /* AuthViewPresenter.swift */; };
 		78754FAF28F5A4220031D2EF /* AuthViewInputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78754FAE28F5A4220031D2EF /* AuthViewInputDelegate.swift */; };
 		78754FB128F5A4410031D2EF /* AuthViewOutputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78754FB028F5A4410031D2EF /* AuthViewOutputDelegate.swift */; };
+		7877D8F029014CFE004BACDA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7877D8EF29014CFE004BACDA /* User.swift */; };
+		7877D8F429017197004BACDA /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7877D8F329017197004BACDA /* CustomViewController.swift */; };
 		7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5B28EEF91200721A9C /* CoreDataManager.swift */; };
 		7889EE5E28EEF93E00721A9C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5D28EEF93E00721A9C /* AuthService.swift */; };
 		78D2EA5128F44D5300ABF4D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78D2EA5028F44D5200ABF4D7 /* GoogleService-Info.plist */; };
@@ -36,6 +38,8 @@
 		78754FAA28F5A3110031D2EF /* AuthViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewPresenter.swift; sourceTree = "<group>"; };
 		78754FAE28F5A4220031D2EF /* AuthViewInputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewInputDelegate.swift; sourceTree = "<group>"; };
 		78754FB028F5A4410031D2EF /* AuthViewOutputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewOutputDelegate.swift; sourceTree = "<group>"; };
+		7877D8EF29014CFE004BACDA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7877D8F329017197004BACDA /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		7889EE5B28EEF91200721A9C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7889EE5D28EEF93E00721A9C /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		78D2EA5028F44D5200ABF4D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -62,6 +66,13 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		78736DA529002ABA00A9849F /* List Reviews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "List Reviews";
+			sourceTree = "<group>";
+		};
 		7873B03028F7E8E2003C9673 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +88,7 @@
 				78754FAE28F5A4220031D2EF /* AuthViewInputDelegate.swift */,
 				78754FB028F5A4410031D2EF /* AuthViewOutputDelegate.swift */,
 				787452DA28EEE8F600356591 /* Auth.storyboard */,
+				7877D8F329017197004BACDA /* CustomViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -113,6 +125,7 @@
 		7889EE4928EEF5A400721A9C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7877D8EF29014CFE004BACDA /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -159,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				7872354E28F3F2F400A0F644 /* Auth */,
+				78736DA529002ABA00A9849F /* List Reviews */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -295,8 +309,10 @@
 				7889EE5E28EEF93E00721A9C /* AuthService.swift in Sources */,
 				7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */,
 				78754FAF28F5A4220031D2EF /* AuthViewInputDelegate.swift in Sources */,
+				7877D8F429017197004BACDA /* CustomViewController.swift in Sources */,
 				7873B03328F85155003C9673 /* String+Ext.swift in Sources */,
 				787452D728EEE8F600356591 /* SceneDelegate.swift in Sources */,
+				7877D8F029014CFE004BACDA /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

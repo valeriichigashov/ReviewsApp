@@ -1,8 +1,8 @@
 import Foundation
 
 protocol AuthViewInputDelegate: AnyObject {
-    func showAlert400()
-    func showAlert401()
+    func showAlert(title: String, message: String)
+    func showNewInterface()
     func setStateEnterButton(isEnabled: Bool)
     func clearData()
     func changeViewState(for type: AuthType)

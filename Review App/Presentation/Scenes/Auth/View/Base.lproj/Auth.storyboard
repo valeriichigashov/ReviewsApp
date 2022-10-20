@@ -140,10 +140,10 @@
             </objects>
             <point key="canvasLocation" x="-613.84615384615381" y="-442.89099526066349"/>
         </scene>
-        <!--View Controller-->
+        <!--Custom View Controller-->
         <scene sceneID="nGK-N3-do7">
             <objects>
-                <viewController storyboardIdentifier="init" id="Wlh-mW-KKt" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="init" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Wlh-mW-KKt" customClass="CustomViewController" customModule="Review_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eCa-wZ-4aA">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -164,10 +164,11 @@
                             <constraint firstItem="m1G-dQ-3QA" firstAttribute="bottom" secondItem="Q5k-8v-fvO" secondAttribute="bottom" constant="372" id="wSf-eU-Z0Z"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="VN4-QK-aa4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NZC-cC-RwN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1572" y="-443"/>
+            <point key="canvasLocation" x="168" y="-443"/>
         </scene>
     </scenes>
     <resources>

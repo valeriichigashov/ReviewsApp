@@ -50,14 +50,15 @@ class AuthViewController: UIViewController {
 
 extension AuthViewController: AuthViewInputDelegate {
     
-    func showAlert400() {
-        let alert = UIAlertController(title: "Failed to Sign Up", message: "400. Bad Request", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        present(alert, animated: true)
+    func showNewInterface() {
+        let storyboard = UIStoryboard(name: "Auth", bundle: nil)
+        if let newViewController = storyboard.instantiateViewController(withIdentifier: "init") as? CustomViewController {
+            present(newViewController, animated: true, completion: nil)
+        }
     }
     
-    func showAlert401() {
-        let alert = UIAlertController(title: "Failed to Sign In", message: "401. Authorization Required", preferredStyle: .alert)
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         present(alert, animated: true)
     }
@@ -108,3 +109,4 @@ private extension AuthViewController {
         passwordInfoLabel.isHidden = true
     }
 }
+

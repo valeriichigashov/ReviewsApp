@@ -95,18 +95,27 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
     func enterButtonTapped() {
         switch authType {
         case.signUp:
-            authService.registrationNewUser(username: username, password: password, complition: {
-                if !self.authService.isSignIn {
-                    self.authViewInputDelegate?.showAlert400()
+            authService.registrationNewUser(username: username, password: password, complition: { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(_):
+                    self.authViewInputDelegate?.showNewInterface()
+                case .failure(let error):
+                    self.authViewInputDelegate?.showAlert(title: "Failed to Sign Up", message: error.localizedDescription)
                 }
             })
         case.signIn:
-            authService.authenticationUser(username: username, password: password, complition: {
-                if !self.authService.isSignIn {
-                    self.authViewInputDelegate?.showAlert401()
+            authService.authenticationUser(username: username, password: password, complition: { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(_):
+                    self.authViewInputDelegate?.showNewInterface()
+                case .failure(let error):
+                    self.authViewInputDelegate?.showAlert(title: "Failed to Sign In", message: error.localizedDescription)
                 }
             })
         }
+        print(authService.isSignIn)
     }
     
     func switchAuthButtonTapped() {
@@ -124,7 +133,7 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
     }
     
     func laterButtonTapped() {
-        authService.signOut()
+        authViewInputDelegate?.showNewInterface()
     }
 }
 
