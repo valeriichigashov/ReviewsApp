@@ -1,6 +1,6 @@
 import Foundation
 
-protocol AuthViewOutputDelegate: AnyObject {
+protocol AuthViewOutput: AnyObject {
     func usernameDidChange(_ text: String?)
     func passwordDidChange(_ text: String?)
     func enterButtonTapped()

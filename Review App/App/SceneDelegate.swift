@@ -1,4 +1,3 @@
-import FirebaseAuth
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -8,34 +7,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
         
-//        if let windowScene = scene as? UIWindowScene {
-//                window = UIWindow(windowScene: windowScene)
-//            let storyboard = UIStoryboard(name: "Auth", bundle: nil)
-//            let newvc = storyboard.instantiateViewController(withIdentifier: "init")
-//            window?.rootViewController = newvc
-//            window?.makeKeyAndVisible()
-//            }
-//        do {
-//            try Auth.auth().signOut()
-//        } catch {
-//            print(error)
-//        }
-//        Auth.auth().signIn(withEmail: "dfsdf@sd.ru", password: "123456") { [weak self] authResult, error in
-//            guard let strongSelf = self else { return }
-//          }
-//        Auth.auth().addStateDidChangeListener { auth, user in
-//            if user == nil {
-//                self.showAuthStoryboard()
-//            }
-//        }
+        window = UIWindow(windowScene: windowScene)
+        let newvc = ListReviewsController(nibName: "ViewListReviews", bundle: nil)
+        window?.rootViewController = newvc
+        window?.makeKeyAndVisible()
+        
+        //showAuthStoryboard()
     }
     
     func showAuthStoryboard() {
         
         let storyboard = UIStoryboard(name: "Auth", bundle: nil)
-        let newvc = storyboard.instantiateViewController(withIdentifier: "signIn") as! AuthViewController
+        guard let newvc = storyboard.instantiateViewController(withIdentifier: "signIn") as? AuthViewController else { return }
+        newvc.modalTransitionStyle = .crossDissolve
+        newvc.modalPresentationStyle = .overCurrentContext
         self.window?.rootViewController?.present(newvc, animated: true)
     }
 

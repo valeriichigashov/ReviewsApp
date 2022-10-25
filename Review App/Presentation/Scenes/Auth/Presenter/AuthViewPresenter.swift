@@ -63,14 +63,14 @@ class AuthViewPresenter {
     private var isUsernameValid = false
     private var isPasswordValid = false
     
-    private weak var authViewInputDelegate: AuthViewInputDelegate?
+    private weak var authViewInputDelegate: AuthViewInput?
     
-    init(authViewInputDelegate: AuthViewInputDelegate) {
+    init(authViewInputDelegate: AuthViewInput) {
         self.authViewInputDelegate = authViewInputDelegate
     }
 }
 
-extension AuthViewPresenter: AuthViewOutputDelegate {
+extension AuthViewPresenter: AuthViewOutput {
     
     func usernameDidChange(_ text: String?) {
         username = text ?? ""
@@ -143,7 +143,7 @@ extension AuthViewPresenter: AuthViewOutputDelegate {
 
 private extension AuthViewPresenter {
     
-    func setAuthViewInputDelegate(authViewInputDelegate: AuthViewInputDelegate?) {
+    func setAuthViewInputDelegate(authViewInputDelegate: AuthViewInput?) {
         self.authViewInputDelegate = authViewInputDelegate
     }
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		784D36F429029DD90001AC14 /* ViewListReviews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 784D36F329029DD90001AC14 /* ViewListReviews.xib */; };
 		7873B03328F85155003C9673 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7873B03228F85155003C9673 /* String+Ext.swift */; };
 		787452D528EEE8F600356591 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787452D428EEE8F600356591 /* AppDelegate.swift */; };
 		787452D728EEE8F600356591 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787452D628EEE8F600356591 /* SceneDelegate.swift */; };
@@ -15,17 +16,24 @@
 		787452DE28EEE8F800356591 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 787452DD28EEE8F800356591 /* Assets.xcassets */; };
 		787452E128EEE8F800356591 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 787452DF28EEE8F800356591 /* LaunchScreen.storyboard */; };
 		78754FAB28F5A3110031D2EF /* AuthViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78754FAA28F5A3110031D2EF /* AuthViewPresenter.swift */; };
-		78754FAF28F5A4220031D2EF /* AuthViewInputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78754FAE28F5A4220031D2EF /* AuthViewInputDelegate.swift */; };
-		78754FB128F5A4410031D2EF /* AuthViewOutputDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78754FB028F5A4410031D2EF /* AuthViewOutputDelegate.swift */; };
+		78754FAF28F5A4220031D2EF /* AuthViewInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78754FAE28F5A4220031D2EF /* AuthViewInput.swift */; };
+		78754FB128F5A4410031D2EF /* AuthViewOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78754FB028F5A4410031D2EF /* AuthViewOutput.swift */; };
+		7875DEA0290667D300847920 /* ListReviewsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875DE9F290667D300847920 /* ListReviewsPresenter.swift */; };
+		7875DEA22906685A00847920 /* ListReviewsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875DEA12906685A00847920 /* ListReviewsInput.swift */; };
+		7875DEA42906687000847920 /* ListReviewsOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875DEA32906687000847920 /* ListReviewsOutput.swift */; };
 		7877D8F029014CFE004BACDA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7877D8EF29014CFE004BACDA /* User.swift */; };
-		7877D8F429017197004BACDA /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7877D8F329017197004BACDA /* CustomViewController.swift */; };
+		787914032902749C00784F35 /* ListReviewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787914022902749C00784F35 /* ListReviewsController.swift */; };
 		7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5B28EEF91200721A9C /* CoreDataManager.swift */; };
 		7889EE5E28EEF93E00721A9C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5D28EEF93E00721A9C /* AuthService.swift */; };
+		78B9B2192906ABAA007A16F6 /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */; };
+		78B9B21D2906BB05007A16F6 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9B21C2906BB05007A16F6 /* ReviewTableViewCell.swift */; };
+		78CA6E1A2906837900559029 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CA6E192906837900559029 /* Review.swift */; };
 		78D2EA5128F44D5300ABF4D7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 78D2EA5028F44D5200ABF4D7 /* GoogleService-Info.plist */; };
 		78D2EA5428F4509600ABF4D7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 78D2EA5328F4509600ABF4D7 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		784D36F329029DD90001AC14 /* ViewListReviews.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewListReviews.xib; sourceTree = "<group>"; };
 		7873B03228F85155003C9673 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		787452D128EEE8F600356591 /* Review App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Review App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		787452D428EEE8F600356591 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,12 +44,18 @@
 		787452E028EEE8F800356591 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		787452E228EEE8F800356591 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78754FAA28F5A3110031D2EF /* AuthViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewPresenter.swift; sourceTree = "<group>"; };
-		78754FAE28F5A4220031D2EF /* AuthViewInputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewInputDelegate.swift; sourceTree = "<group>"; };
-		78754FB028F5A4410031D2EF /* AuthViewOutputDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewOutputDelegate.swift; sourceTree = "<group>"; };
+		78754FAE28F5A4220031D2EF /* AuthViewInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewInput.swift; sourceTree = "<group>"; };
+		78754FB028F5A4410031D2EF /* AuthViewOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewOutput.swift; sourceTree = "<group>"; };
+		7875DE9F290667D300847920 /* ListReviewsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReviewsPresenter.swift; sourceTree = "<group>"; };
+		7875DEA12906685A00847920 /* ListReviewsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReviewsInput.swift; sourceTree = "<group>"; };
+		7875DEA32906687000847920 /* ListReviewsOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReviewsOutput.swift; sourceTree = "<group>"; };
 		7877D8EF29014CFE004BACDA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		7877D8F329017197004BACDA /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		787914022902749C00784F35 /* ListReviewsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReviewsController.swift; sourceTree = "<group>"; };
 		7889EE5B28EEF91200721A9C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7889EE5D28EEF93E00721A9C /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewTableViewCell.xib; sourceTree = "<group>"; };
+		78B9B21C2906BB05007A16F6 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
+		78CA6E192906837900559029 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		78D2EA5028F44D5200ABF4D7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +83,8 @@
 		78736DA529002ABA00A9849F /* List Reviews */ = {
 			isa = PBXGroup;
 			children = (
+				7879140929028FC700784F35 /* Presenter */,
+				7879140829028FBA00784F35 /* View */,
 			);
 			path = "List Reviews";
 			sourceTree = "<group>";
@@ -85,10 +101,9 @@
 			isa = PBXGroup;
 			children = (
 				787452D828EEE8F600356591 /* AuthViewController.swift */,
-				78754FAE28F5A4220031D2EF /* AuthViewInputDelegate.swift */,
-				78754FB028F5A4410031D2EF /* AuthViewOutputDelegate.swift */,
+				78754FAE28F5A4220031D2EF /* AuthViewInput.swift */,
+				78754FB028F5A4410031D2EF /* AuthViewOutput.swift */,
 				787452DA28EEE8F600356591 /* Auth.storyboard */,
-				7877D8F329017197004BACDA /* CustomViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -122,10 +137,32 @@
 			path = "Review App";
 			sourceTree = "<group>";
 		};
+		7879140829028FBA00784F35 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				787914022902749C00784F35 /* ListReviewsController.swift */,
+				7875DEA12906685A00847920 /* ListReviewsInput.swift */,
+				7875DEA32906687000847920 /* ListReviewsOutput.swift */,
+				784D36F329029DD90001AC14 /* ViewListReviews.xib */,
+				78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */,
+				78B9B21C2906BB05007A16F6 /* ReviewTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7879140929028FC700784F35 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				7875DE9F290667D300847920 /* ListReviewsPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		7889EE4928EEF5A400721A9C /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				7877D8EF29014CFE004BACDA /* User.swift */,
+				78CA6E192906837900559029 /* Review.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -292,6 +329,8 @@
 				787452DE28EEE8F800356591 /* Assets.xcassets in Resources */,
 				78D2EA5128F44D5300ABF4D7 /* GoogleService-Info.plist in Resources */,
 				787452DC28EEE8F600356591 /* Auth.storyboard in Resources */,
+				78B9B2192906ABAA007A16F6 /* ReviewTableViewCell.xib in Resources */,
+				784D36F429029DD90001AC14 /* ViewListReviews.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,16 +342,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				787452D928EEE8F600356591 /* AuthViewController.swift in Sources */,
-				78754FB128F5A4410031D2EF /* AuthViewOutputDelegate.swift in Sources */,
+				787914032902749C00784F35 /* ListReviewsController.swift in Sources */,
+				78B9B21D2906BB05007A16F6 /* ReviewTableViewCell.swift in Sources */,
+				78754FB128F5A4410031D2EF /* AuthViewOutput.swift in Sources */,
 				78754FAB28F5A3110031D2EF /* AuthViewPresenter.swift in Sources */,
 				787452D528EEE8F600356591 /* AppDelegate.swift in Sources */,
 				7889EE5E28EEF93E00721A9C /* AuthService.swift in Sources */,
 				7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */,
-				78754FAF28F5A4220031D2EF /* AuthViewInputDelegate.swift in Sources */,
-				7877D8F429017197004BACDA /* CustomViewController.swift in Sources */,
+				7875DEA42906687000847920 /* ListReviewsOutput.swift in Sources */,
+				78754FAF28F5A4220031D2EF /* AuthViewInput.swift in Sources */,
+				7875DEA0290667D300847920 /* ListReviewsPresenter.swift in Sources */,
 				7873B03328F85155003C9673 /* String+Ext.swift in Sources */,
+				78CA6E1A2906837900559029 /* Review.swift in Sources */,
 				787452D728EEE8F600356591 /* SceneDelegate.swift in Sources */,
 				7877D8F029014CFE004BACDA /* User.swift in Sources */,
+				7875DEA22906685A00847920 /* ListReviewsInput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

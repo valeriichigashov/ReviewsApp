@@ -1,6 +1,6 @@
 import Foundation
 
-protocol AuthViewInputDelegate: AnyObject {
+protocol AuthViewInput: AnyObject {
     func showAlert(title: String, message: String)
     func showNewInterface()
     func setStateEnterButton(isEnabled: Bool)

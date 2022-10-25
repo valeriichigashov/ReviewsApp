@@ -16,7 +16,7 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var usernameInfoLabel: UILabel!
     @IBOutlet weak var passwordInfoLabel: UILabel!
     
-    lazy var presenter: AuthViewOutputDelegate = {
+    lazy var presenter: AuthViewOutput = {
         let presenter = AuthViewPresenter(authViewInputDelegate: self)
         return presenter
     }()
@@ -48,11 +48,13 @@ class AuthViewController: UIViewController {
     }
 }
 
-extension AuthViewController: AuthViewInputDelegate {
+extension AuthViewController: AuthViewInput {
     
     func showNewInterface() {
         let storyboard = UIStoryboard(name: "Auth", bundle: nil)
-        if let newViewController = storyboard.instantiateViewController(withIdentifier: "init") as? CustomViewController {
+        if let newViewController = storyboard.instantiateViewController(withIdentifier: "init") as? ListReviewsController {
+            newViewController.modalTransitionStyle = .crossDissolve
+            newViewController.modalPresentationStyle = .overCurrentContext
             present(newViewController, animated: true, completion: nil)
         }
     }
@@ -107,6 +109,7 @@ private extension AuthViewController {
         enterButton.isEnabled = false
         usernameInfoLabel.isHidden = true
         passwordInfoLabel.isHidden = true
+        
     }
 }
 
