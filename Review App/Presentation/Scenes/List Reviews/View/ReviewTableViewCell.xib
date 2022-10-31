@@ -38,10 +38,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QR1-2d-kG5">
-                        <rect key="frame" x="388" y="30" width="85" height="20"/>
+                        <rect key="frame" x="368" y="30" width="100" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="85" id="Qs3-Sa-JST"/>
-                            <constraint firstAttribute="height" constant="20" id="fUz-hh-Eea"/>
+                            <constraint firstAttribute="height" constant="20" id="Jf2-eR-nEy"/>
+                            <constraint firstAttribute="width" constant="100" id="hwl-Fu-Rd2"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
@@ -56,24 +56,24 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbO-Ch-sBJ">
                         <rect key="frame" x="88" y="143" width="302" height="2"/>
-                        <color key="backgroundColor" systemColor="linkColor"/>
+                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="BBg-jN-cPJ" firstAttribute="leading" secondItem="sve-an-XEv" secondAttribute="trailing" constant="8" symbolic="YES" id="0BW-mE-cBg"/>
                     <constraint firstItem="sve-an-XEv" firstAttribute="leading" secondItem="pqt-jS-tvC" secondAttribute="leading" constant="5" id="30H-qE-cBC"/>
-                    <constraint firstItem="QR1-2d-kG5" firstAttribute="leading" secondItem="8VA-x0-2UU" secondAttribute="trailing" constant="28" id="A1h-yH-o5B"/>
+                    <constraint firstAttribute="trailing" secondItem="QR1-2d-kG5" secondAttribute="trailing" constant="11" id="A1d-nn-vW3"/>
                     <constraint firstAttribute="bottom" secondItem="sve-an-XEv" secondAttribute="bottom" constant="27" id="CS1-SW-brT"/>
                     <constraint firstItem="nbO-Ch-sBJ" firstAttribute="top" secondItem="pqt-jS-tvC" secondAttribute="top" constant="143" id="IBF-Ud-JLV"/>
                     <constraint firstItem="BBg-jN-cPJ" firstAttribute="top" secondItem="pqt-jS-tvC" secondAttribute="top" constant="63" id="Nas-if-WSp"/>
                     <constraint firstItem="8VA-x0-2UU" firstAttribute="top" secondItem="pqt-jS-tvC" secondAttribute="top" constant="25" id="PPG-WD-IOa"/>
-                    <constraint firstAttribute="trailing" secondItem="QR1-2d-kG5" secondAttribute="trailing" constant="6" id="RKL-GI-SKn"/>
-                    <constraint firstItem="QR1-2d-kG5" firstAttribute="top" secondItem="pqt-jS-tvC" secondAttribute="top" constant="30" id="dnc-c4-eaL"/>
                     <constraint firstItem="8VA-x0-2UU" firstAttribute="leading" secondItem="sve-an-XEv" secondAttribute="trailing" constant="5" id="hhe-AC-y1l"/>
                     <constraint firstItem="nbO-Ch-sBJ" firstAttribute="leading" secondItem="pqt-jS-tvC" secondAttribute="leading" constant="88" id="iFR-EB-J9m"/>
                     <constraint firstItem="sve-an-XEv" firstAttribute="top" secondItem="pqt-jS-tvC" secondAttribute="top" constant="26" id="jcK-or-2nj"/>
+                    <constraint firstItem="QR1-2d-kG5" firstAttribute="top" secondItem="pqt-jS-tvC" secondAttribute="top" constant="30" id="k7i-gp-4LV"/>
                     <constraint firstAttribute="bottom" secondItem="nbO-Ch-sBJ" secondAttribute="bottom" constant="8" id="pwd-RA-6NN"/>
                     <constraint firstAttribute="trailing" secondItem="BBg-jN-cPJ" secondAttribute="trailing" constant="6" id="qTZ-in-bsf"/>
+                    <constraint firstItem="QR1-2d-kG5" firstAttribute="leading" secondItem="8VA-x0-2UU" secondAttribute="trailing" constant="8" symbolic="YES" id="tee-bt-mrO"/>
                     <constraint firstAttribute="trailing" secondItem="nbO-Ch-sBJ" secondAttribute="trailing" constant="89" id="u5y-7q-vrZ"/>
                 </constraints>
             </tableViewCellContentView>
@@ -87,8 +87,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

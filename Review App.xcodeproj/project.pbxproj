@@ -144,8 +144,8 @@
 				7875DEA12906685A00847920 /* ListReviewsInput.swift */,
 				7875DEA32906687000847920 /* ListReviewsOutput.swift */,
 				784D36F329029DD90001AC14 /* ViewListReviews.xib */,
-				78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */,
 				78B9B21C2906BB05007A16F6 /* ReviewTableViewCell.swift */,
+				78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";

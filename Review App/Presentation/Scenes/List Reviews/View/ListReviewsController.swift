@@ -1,73 +1,89 @@
 import UIKit
 
-enum SectionType {
-    case favorite
-    case unrated
-    
-    var nameSection: String{
-        switch self {
-        case.favorite:
-            return "Favorite"
-        case.unrated:
-            return "Unrated"
-        }
-    }
-}
-
 class ListReviewsController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let nameSection = ["Favorite","Unrated"]
-    let data = ["Smile", "The Good House", "Samaritan"]
-    let dataDescription = ["dsf sd fsdfsdfsdf sdfsdfsdf sdfsd fdsfsdfsdf sdfs dfsdfsd sdfdfwefwef wefwefewfefffw wefwefwewef",
-                           "dsf sd fsdfsdfsdf sdfsdf sdfsdfdsfsdfsdf sdfsdfsdfsd sdfdfwwef wefwefefffw wefwewef",
-                           "dsf sd fsdfsdfv sdf sdfsdfysdf sdyuiyiy fsdfdsf sdfsdf sddfsdfsd sdfdfwefhjkwef wefwefewfefffw wefwefwewef"]
-    let dataOfDate = ["14.11.2032","02.02.1998","12.03.2012"]
-    
-    let mockData: [Review] = [Review(title: "sdf", desription: "sdfsdf"),
-                              Review(title: "sdf", desription: "sdfsdf"),
-                              Review(title: "sdf", desription: "sdfsdf")]
-    
+    lazy var presenter: ListReviewsOutput = {
+        let presenter = ListReviewsPresenter(view: self)
+        return presenter
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.frame = .zero
-        //tableView.style = .grouped
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(UINib(nibName: "ReviewTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+        presenter.viewDidLoad()
+        setup()
     }
+}
+
+extension ListReviewsController: ListReviewsInput {
     
+    func setSections() {
+        
+        tableView.reloadData()
+    }
 }
 
 extension ListReviewsController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let toggle = UIContextualAction(style: .normal, title: nil) {(_, _, complitionHand) in
+            self.presenter.toggleRating(for: indexPath)
+        }
+        toggle.image = UIImage(systemName: "togglepower")
+        toggle.backgroundColor = .systemGreen
+            
+        return UISwipeActionsConfiguration(actions: [toggle])
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let delete = UIContextualAction(style: .destructive, title: nil) {(_, _, complitionHand) in
+            self.presenter.deleteCell(for: indexPath)
+        }
+
+        delete.image = UIImage(systemName: "trash")
+        delete.backgroundColor = .red
+
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
 }
 
 extension ListReviewsController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return self.nameSection[section]
+        return presenter.numberOfRowsInSection(section)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.data.count
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return presenter.titleForHeaderInSection(section)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        
+        return presenter.numberOfSections()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ReviewTableViewCell {
-            cell.titleCell.text = self.data[indexPath.row]
-            cell.descriptionCell.text = self.dataDescription[indexPath.row]
-            cell.dateCell.text = self.dataOfDate[indexPath.row]
+            let model: Review = presenter.cellData(for: indexPath)
+            cell.configure(with: model)
             return cell
         }
         return UITableViewCell()
+    }
+}
+
+private extension ListReviewsController {
+    
+    func setup(){
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UINib(nibName: "ReviewTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
     }
 }
