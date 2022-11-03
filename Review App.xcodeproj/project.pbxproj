@@ -23,6 +23,7 @@
 		7875DEA42906687000847920 /* ListReviewsOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875DEA32906687000847920 /* ListReviewsOutput.swift */; };
 		7877D8F029014CFE004BACDA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7877D8EF29014CFE004BACDA /* User.swift */; };
 		787914032902749C00784F35 /* ListReviewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787914022902749C00784F35 /* ListReviewsController.swift */; };
+		787A9F722911022800698789 /* EditReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787A9F712911022800698789 /* EditReviewController.swift */; };
 		7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5B28EEF91200721A9C /* CoreDataManager.swift */; };
 		7889EE5E28EEF93E00721A9C /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5D28EEF93E00721A9C /* AuthService.swift */; };
 		78B9B2192906ABAA007A16F6 /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */; };
@@ -51,6 +52,7 @@
 		7875DEA32906687000847920 /* ListReviewsOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReviewsOutput.swift; sourceTree = "<group>"; };
 		7877D8EF29014CFE004BACDA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		787914022902749C00784F35 /* ListReviewsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReviewsController.swift; sourceTree = "<group>"; };
+		787A9F712911022800698789 /* EditReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReviewController.swift; sourceTree = "<group>"; };
 		7889EE5B28EEF91200721A9C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7889EE5D28EEF93E00721A9C /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewTableViewCell.xib; sourceTree = "<group>"; };
@@ -158,6 +160,31 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+787A9F6E2910FC6100698789 /* Edit review */ = {
+			isa = PBXGroup;
+			children = (
+				787A9F702910FCBB00698789 /* Presenter */,
+				787A9F6F2910FCB200698789 /* View */,
+			);
+			path = "Edit review";
+			sourceTree = "<group>";
+		};
+		787A9F6F2910FCB200698789 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				787A9F712911022800698789 /* EditReviewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		787A9F702910FCBB00698789 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		7889EE4928EEF5A400721A9C /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +237,7 @@
 			children = (
 				7872354E28F3F2F400A0F644 /* Auth */,
 				78736DA529002ABA00A9849F /* List Reviews */,
+				787A9F6E2910FC6100698789 /* Edit review */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -348,6 +376,8 @@
 				78754FAB28F5A3110031D2EF /* AuthViewPresenter.swift in Sources */,
 				787452D528EEE8F600356591 /* AppDelegate.swift in Sources */,
 				7889EE5E28EEF93E00721A9C /* AuthService.swift in Sources */,
+				7889EE5E28EEF93E00721A9C /* LoginService.swift in Sources */,
+				787A9F722911022800698789 /* EditReviewController.swift in Sources */,
 				7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */,
 				7875DEA42906687000847920 /* ListReviewsOutput.swift in Sources */,
 				78754FAF28F5A4220031D2EF /* AuthViewInput.swift in Sources */,
