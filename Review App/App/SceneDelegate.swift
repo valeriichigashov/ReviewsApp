@@ -10,7 +10,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        let newvc = ListReviewsController(nibName: "ViewListReviews", bundle: nil)
+        //let newvc = ListReviewsController(nibName: "ViewListReviews", bundle: nil)
+        let newvc = NavigationController(rootViewController: EditReviewController())
         window?.rootViewController = newvc
         window?.makeKeyAndVisible()
         
