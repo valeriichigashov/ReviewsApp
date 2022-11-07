@@ -2,17 +2,6 @@ import UIKit
 
 class EditReviewController: UIViewController {
     
-    private lazy var navigationBar: UINavigationBar = {
-        let navigationBar = UINavigationBar()
-        let navigationItem = UINavigationItem(title: "Create a review")
-        let saveItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: nil, action: #selector(saveReview))
-        navigationItem.rightBarButtonItem = saveItem
-        navigationBar.setItems([navigationItem], animated: false)
-        navigationBar.layer.masksToBounds = false
-        
-        return navigationBar
-    }()
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
@@ -23,27 +12,29 @@ class EditReviewController: UIViewController {
         let stackView = UIStackView()
         stackView.frame.size = scrollView.contentSize
         stackView.axis = .vertical
-        stackView.spacing = 20
+        stackView.spacing = 30
         return stackView
     }()
     
-    private let reviewName: UILabel = {
-        let reviewName = UILabel()
-        reviewName.text = "Review name"
-        return reviewName
+    private let reviewNameLabel: UILabel = {
+        let reviewNameLabel = UILabel()
+        reviewNameLabel.text = "Review name"
+        return reviewNameLabel
     }()
     
-    private let enterName: UITextField = {
-        let enterName = UITextField()
-        enterName.placeholder = "Enter name"
-        enterName.layer.borderWidth = 1
-        return enterName
+    private let enterNameTextField: UITextField = {
+        let enterNameTextField = UITextField()
+        enterNameTextField.placeholder = "Enter name"
+        enterNameTextField.layer.borderWidth = 1
+        enterNameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: enterNameTextField.frame.height))
+        enterNameTextField.leftViewMode = .always
+        return enterNameTextField
     }()
     
-    private let reviewImage: UILabel = {
-        let reviewImage = UILabel()
-        reviewImage.text = "Review image(Optional)"
-        return reviewImage
+    private let reviewImageLabel: UILabel = {
+        let reviewImageLabel = UILabel()
+        reviewImageLabel.text = "Review image(Optional)"
+        return reviewImageLabel
     }()
     
     private let imageButtonView: UIView = {
@@ -53,55 +44,61 @@ class EditReviewController: UIViewController {
     
     private let imageButton: UIButton = {
         let imageButton = UIButton()
-        let image = UIImage(systemName: "photo")
+        let config = UIImage.SymbolConfiguration(scale: .small)
+        let image = UIImage(systemName: "photo", withConfiguration: config)
         imageButton.setImage(image, for: .normal)
+//        imageButton.contentMode = .scaleAspectFill
+        imageButton.imageView?.contentMode = .scaleAspectFill
         imageButton.contentVerticalAlignment = .fill
         imageButton.contentHorizontalAlignment = .fill
+        imageButton.tintColor = .black
+        imageButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+        imageButton.layer.borderWidth = 2
+        imageButton.layer.cornerRadius = 8
         return imageButton
     }()
     
-    private let review: UILabel = {
-        let review = UILabel()
-        review.text = "Review"
-        return review
+    private let reviewLabel: UILabel = {
+        let reviewLabel = UILabel()
+        reviewLabel.text = "Review"
+        return reviewLabel
     }()
     
-    private let enterReview: UITextView = {
-        let enterReview = UITextView()
-        enterReview.text = "Enter review text"
-        enterReview.textColor = UIColor(white: 0.0, alpha: 0.5)
-        enterReview.layer.borderWidth = 1
-        return enterReview
+    private let enterReviewTextField: UITextView = {
+        let enterReviewTextField = UITextView()
+        enterReviewTextField.text = "Enter review text"
+        enterReviewTextField.textColor = UIColor(white: 0.0, alpha: 0.5)
+        enterReviewTextField.layer.borderWidth = 1
+        return enterReviewTextField
     }()
     
-    private let rating: UILabel = {
-        let rating = UILabel()
-        rating.text = "Rating(Optional)"
-        return rating
+    private let ratingLabel: UILabel = {
+        let ratingLabel = UILabel()
+        ratingLabel.text = "Rating(Optional)"
+        return ratingLabel
     }()
     
-    private lazy var slider: UISlider = {
-        let slider = UISlider()
-        slider.minimumValue = 0
-        slider.maximumValue = 10
-        slider.value = 1
-        slider.addTarget(self, action: #selector(sliderValue(sender:)), for: .valueChanged)
-        return slider
+    private lazy var ratingSlider: UISlider = {
+        let ratingSlider = UISlider()
+        ratingSlider.minimumValue = 0
+        ratingSlider.maximumValue = 10
+        ratingSlider.value = 1
+        ratingSlider.tintColor = .black
+        ratingSlider.thumbTintColor = .black
+        ratingSlider.addTarget(self, action: #selector(sliderValueDidChange(sender:)), for: .valueChanged)
+        return ratingSlider
     }()
     
-    private let ratingValue: UILabel = {
-        let ratingValue = UILabel()
-        ratingValue.text = "1 / 10"
-        return ratingValue
+    private let ratingValueLabel: UILabel = {
+        let ratingValueLabel = UILabel()
+        ratingValueLabel.text = "1 / 10"
+        return ratingValueLabel
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        
-        showView()
-        addAllConstraints()
     }
 }
 
@@ -124,51 +121,37 @@ extension EditReviewController: UITextViewDelegate {
     }
 }
 
-extension EditReviewController {
+extension EditReviewController: UITextFieldDelegate {
     
-    private func setupViewConstr(){
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
+        view.endEditing(true)
     }
+}
+
+private extension EditReviewController {
     
-    private func setNavigationBarConstraints() {
+    func setScrollViewConstraints() {
         
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        navigationBar.heightAnchor.constraint(equalToConstant: 60).isActive = true
-    }
-    
-    private func setScrollViewConstraints() {
-        
-        addConstraints(viewElement: scrollView)
-        scrollView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 
-    private func setStackViewConstraints() {
+    func setStackViewConstraints() {
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
         stackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor).isActive = true
         stackView.leftAnchor.constraint(equalTo: scrollView.leftAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -10).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
     }
     
-    private func setEnterNameTextFieldConstraints() {
-        
-        addConstraints(viewElement: enterName)
-        enterName.heightAnchor.constraint(equalToConstant: 30).isActive = true
-    }
-    
-    private func setImageButtonViewConstraints() {
-        
-        addConstraints(viewElement: imageButtonView)
-        imageButtonView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-    }
-    
-    private func setImageButtonConstraints() {
+    func setImageButtonConstraints() {
         
         imageButton.translatesAutoresizingMaskIntoConstraints = false
         imageButton.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -178,86 +161,66 @@ extension EditReviewController {
         imageButton.bottomAnchor.constraint(equalTo: imageButtonView.bottomAnchor).isActive = true
     }
     
-    private func setEnterReviewTextViewConstraints() {
-        
-        addConstraints(viewElement: enterReview)
-        enterReview.heightAnchor.constraint(equalToConstant: 80).isActive = true
+    func setConstraints() {
+        enterNameTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        imageButtonView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        enterReviewTextField.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        ratingSlider.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
-    private func setSliderConstraints() {
+    @objc func sliderValueDidChange(sender: UISlider) {
         
-        addConstraints(viewElement: slider)
-        slider.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        ratingValueLabel.text = "\(Int(sender.value)) / \(Int(ratingSlider.maximumValue))"
     }
     
-    private func setLabelConstraints(label: UILabel) {
-        
-        addConstraints(viewElement: label)
-        label.heightAnchor.constraint(equalToConstant: 60).isActive = true
+    func addTapGestureToHideKeyboard() {
+        let tapGesture = UITapGestureRecognizer(target: view, action: #selector(view.endEditing))
+        view.addGestureRecognizer(tapGesture)
     }
     
-    private func addConstraints(viewElement: UIView) {
+    func showView() {
         
-        viewElement.translatesAutoresizingMaskIntoConstraints = false
-        viewElement.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        viewElement.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
-    }
-        
-    @objc func saveReview() {
-    
-    }
-    
-    @objc func sliderValue(sender: UISlider) {
-        
-        ratingValue.text = "\(Int(sender.value)) / \(Int(slider.maximumValue))"
-    }
-    
-    private func showView() {
-        
-        view.addSubview(navigationBar)
         view.addSubview(scrollView)
         
         scrollView.addSubview(stackView)
 
-        stackView.addArrangedSubview(reviewName)
-        stackView.addArrangedSubview(enterName)
+        stackView.addArrangedSubview(reviewNameLabel)
+        stackView.addArrangedSubview(enterNameTextField)
 
-        stackView.addArrangedSubview(reviewImage)
+        stackView.addArrangedSubview(reviewImageLabel)
         stackView.addArrangedSubview(imageButtonView)
         imageButtonView.addSubview(imageButton)
 
-        stackView.addArrangedSubview(review)
-        stackView.addArrangedSubview(enterReview)
+        stackView.addArrangedSubview(reviewLabel)
+        stackView.addArrangedSubview(enterReviewTextField)
 
-        stackView.addArrangedSubview(rating)
-        stackView.addArrangedSubview(slider)
-        stackView.addArrangedSubview(ratingValue)
+        stackView.addArrangedSubview(ratingLabel)
+        stackView.addArrangedSubview(ratingSlider)
+        stackView.addArrangedSubview(ratingValueLabel)
+        
+        stackView.setCustomSpacing(5, after: reviewNameLabel)
+        stackView.setCustomSpacing(5, after: reviewImageLabel)
+        stackView.setCustomSpacing(5, after: reviewLabel)
+        stackView.setCustomSpacing(5, after: ratingLabel)
+        stackView.setCustomSpacing(5, after: ratingSlider)
     }
     
-    private func addAllConstraints() {
+    func addAllConstraints() {
         
-        setNavigationBarConstraints()
         setScrollViewConstraints()
         setStackViewConstraints()
-        
-        setLabelConstraints(label: reviewName)
-        setEnterNameTextFieldConstraints()
-        
-        setLabelConstraints(label: reviewImage)
-        setImageButtonViewConstraints()
+        setConstraints()
         setImageButtonConstraints()
-        
-        setLabelConstraints(label: review)
-        setEnterReviewTextViewConstraints()
-        
-        setLabelConstraints(label: rating)
-        setSliderConstraints()
-        setLabelConstraints(label: ratingValue)
     }
     
-    private func setupUI() {
+    func setupUI() {
         
         view.backgroundColor = .white
-        enterReview.delegate = self
+        enterReviewTextField.delegate = self
+        enterNameTextField.delegate = self
+        
+        showView()
+        addAllConstraints()
+        addTapGestureToHideKeyboard()
     }
 }
