@@ -10,9 +10,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        //let newvc = ListReviewsController(nibName: "ViewListReviews", bundle: nil)
-        let newvc = NavigationController(rootViewController: EditReviewController())
-        window?.rootViewController = newvc
+        let viewController = ListReviewsController(nibName: "ViewListReviews", bundle: nil)
+        let navigateController = UINavigationController(rootViewController: viewController)
+        window?.rootViewController = navigateController
         window?.makeKeyAndVisible()
         
         //showAuthStoryboard()
@@ -21,10 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func showAuthStoryboard() {
         
         let storyboard = UIStoryboard(name: "Auth", bundle: nil)
-        guard let newvc = storyboard.instantiateViewController(withIdentifier: "signIn") as? AuthViewController else { return }
-        newvc.modalTransitionStyle = .crossDissolve
-        newvc.modalPresentationStyle = .overCurrentContext
-        self.window?.rootViewController?.present(newvc, animated: true)
+        guard let authViewController = storyboard.instantiateViewController(withIdentifier: "signIn") as? AuthViewController else { return }
+        authViewController.modalTransitionStyle = .crossDissolve
+        authViewController.modalPresentationStyle = .overCurrentContext
+        self.window?.rootViewController?.present(authViewController, animated: true)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

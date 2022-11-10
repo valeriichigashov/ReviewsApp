@@ -83,7 +83,7 @@
                 <outlet property="imageCell" destination="sve-an-XEv" id="hEF-vx-ssb"/>
                 <outlet property="titleCell" destination="8VA-x0-2UU" id="60Y-Kx-eeK"/>
             </connections>
-            <point key="canvasLocation" x="-1156.1538461538462" y="-408.41232227488149"/>
+            <point key="canvasLocation" x="-1239" y="-472"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -26,6 +26,8 @@ enum Section {
 
 class ListReviewsPresenter {
     
+    private var review = Review(title: "", desription: "", date: Date(), isRated: false, ratingValue: 0)
+    
     private var sections = [Section]()
     private weak var view: ListReviewsInput?
     
@@ -40,6 +42,28 @@ extension ListReviewsPresenter: ListReviewsOutput {
     func viewDidLoad() {
         
         createCells()
+    }
+    
+    func addReviewCell() {
+        
+        let cell = view?.setNewReviewCell() ?? review
+        var allCells = sections.flatMap { $0.cells }
+        allCells.append(cell)
+        
+        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
+        view?.setSections()
+    }
+    
+    func editReviewCell(for indexPath: IndexPath) {
+        
+        let selectCell = sections[indexPath.section].cells[indexPath.row]
+        let editCell = view?.setNewReviewCell() ?? review
+        var allCells = sections.flatMap { $0.cells }
+        allCells.removeAll(where: { $0.id == selectCell.id })
+        allCells.append(editCell)
+        
+        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
+        view?.setSections()
     }
     
     func deleteCell(for indexPath: IndexPath){
@@ -57,6 +81,7 @@ extension ListReviewsPresenter: ListReviewsOutput {
         
         var cell = sections[indexPath.section].cells[indexPath.row]
         cell.isRated.toggle()
+        cell.ratingValue = 0
         
         var allCells = sections.flatMap { $0.cells }
         allCells.removeAll(where: { $0.id == cell.id })
@@ -85,8 +110,6 @@ extension ListReviewsPresenter: ListReviewsOutput {
         
         sections[section].nameSection
     }
-    
-
 }
 
 private extension ListReviewsPresenter {
