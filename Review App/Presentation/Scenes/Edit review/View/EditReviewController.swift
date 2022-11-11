@@ -9,7 +9,6 @@ class EditReviewController: UIViewController {
     override var navigationItem: UINavigationItem {
         let item = super.navigationItem
         item.rightBarButtonItem = barButtonItem
-        item.title = "Create a review"
         return item
     }
     
@@ -99,7 +98,7 @@ class EditReviewController: UIViewController {
         let ratingSlider = UISlider()
         ratingSlider.minimumValue = 0
         ratingSlider.maximumValue = 10
-        ratingSlider.value = 1
+        ratingSlider.value = 0
         ratingSlider.tintColor = .black
         ratingSlider.thumbTintColor = .black
         ratingSlider.addTarget(self, action: #selector(didChangeSliderValue(sender:)), for: .valueChanged)
@@ -108,21 +107,12 @@ class EditReviewController: UIViewController {
     
     private let ratingValueLabel: UILabel = {
         let ratingValueLabel = UILabel()
-        ratingValueLabel.text = "1 / 10"
+        ratingValueLabel.text = "0 / 10"
         return ratingValueLabel
     }()
     
-    private var reviewTitle = ""
+    private var editedReview: Review?
     private var reviewDescription = ""
-    private var rating: Bool = false
-    private var date = Date()
-    
-    var updatingReviewTitle = ""
-    var updatingReviewDescription = "Enter review text"
-    var updatingRatingValue = 1
-    var updatingRatingValueLabel = "1 / 10"
-    
-    private lazy var review = Review(title: reviewTitle, desription: reviewDescription, date: date, isRated: rating, ratingValue: Int(ratingSlider.value))
     
     var complitionHandler: ((Review) -> ())?
     
@@ -131,9 +121,14 @@ class EditReviewController: UIViewController {
         setupUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateData(withText: updatingReviewTitle, withText: updatingReviewDescription, withRating: updatingRatingValue, withText: updatingRatingValueLabel)
+    func configure(with model: Review) {
+        
+        editedReview = model
+        enterNameTextField.text = model.title
+        enterReviewTextView.text = model.desription
+        enterReviewTextView.textColor = UIColor(white: 0.0, alpha: 1.0)
+        ratingSlider.value = Float(model.ratingValue)
+        ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
     }
 }
 
@@ -171,8 +166,11 @@ extension EditReviewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         
         reviewDescription = textView.text
-        validateData()
-        validateUpdatingData()
+        if editedReview == nil {
+            validateData()
+        } else {
+            validateEditingData()
+        }
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -234,15 +232,18 @@ private extension EditReviewController {
     
     @objc func didChangeReviewName(sender: UITextField) {
         
-        reviewTitle = sender.text ?? ""
-        validateData()
-        validateUpdatingData()
+        enterNameTextField.text = sender.text ?? ""
+        if editedReview == nil {
+            validateData()
+        } else {
+            validateEditingData()
+        }
     }
     
     @objc func didChangeSliderValue(sender: UISlider) {
         
         ratingValueLabel.text = "\(Int(sender.value)) / \(Int(ratingSlider.maximumValue))"
-        validateUpdatingData()
+        validateEditingData()
     }
     
     @objc func didTapImageButton(sender: UIButton) {
@@ -256,7 +257,12 @@ private extension EditReviewController {
     
     @objc func didTapSaveReview() {
         
-        ratingSlider.value >= 1 ? (rating = true) : (rating = false)
+        let review = Review(id: editedReview?.id ?? UUID().uuidString,
+                            title: enterNameTextField.text ?? "",
+                            desription: enterReviewTextView.text,
+                            date: Date(),
+                            isRated: ratingSlider.value >= 1,
+                            ratingValue: Int(ratingSlider.value))
         complitionHandler?(review)
         activeIndicator()
         navigationController?.popViewController(animated: true)
@@ -317,37 +323,20 @@ private extension EditReviewController {
     
     func validateData() {
         
-        if !reviewTitle.isEmpty && !reviewDescription.isEmpty {
+        if !(enterNameTextField.text?.isEmpty ?? false) && !reviewDescription.isEmpty {
             barButtonItem.isEnabled = true
         } else {
             barButtonItem.isEnabled = false
         }
     }
     
-    func validateUpdatingData() {
+    func validateEditingData() {
         
-        if updatingReviewTitle != enterNameTextField.text || updatingReviewDescription != enterReviewTextView.text || updatingRatingValue != Int(ratingSlider.value) {
-            barButtonItem.isEnabled = true
-            reviewTitle = enterNameTextField.text ?? ""
-            reviewDescription = enterReviewTextView.text
-            ratingSlider.value = ratingSlider.value
-        } else {
+        if (enterNameTextField.text == editedReview?.title || enterNameTextField.text == "") && (enterReviewTextView.text == editedReview?.desription || enterReviewTextView.text == "") && Int(ratingSlider.value) == editedReview?.ratingValue {
             barButtonItem.isEnabled = false
-        }
-    }
-    
-    func updateData(withText name: String, withText description: String, withRating rating: Int, withText ratingValue: String) {
-        
-        enterNameTextField.text = name
-        enterReviewTextView.text = description
-        if enterReviewTextView.text == "Enter review text" {
-            enterReviewTextView.textColor = UIColor(white: 0.0, alpha: 0.5)
         } else {
-            enterReviewTextView.textColor = UIColor(white: 0.0, alpha: 1.0)
+            barButtonItem.isEnabled = true
         }
-        
-        ratingSlider.value = Float(rating)
-        ratingValueLabel.text = "\(Int(rating)) / \(Int(ratingSlider.maximumValue))"
     }
     
     func activeIndicator() {

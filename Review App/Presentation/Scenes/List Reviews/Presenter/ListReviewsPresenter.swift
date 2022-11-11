@@ -26,8 +26,6 @@ enum Section {
 
 class ListReviewsPresenter {
     
-    private var review = Review(title: "", desription: "", date: Date(), isRated: false, ratingValue: 0)
-    
     private var sections = [Section]()
     private weak var view: ListReviewsInput?
     
@@ -44,23 +42,17 @@ extension ListReviewsPresenter: ListReviewsOutput {
         createCells()
     }
     
-    func addReviewCell() {
+    func editReviewCell(_ model: Review) {
         
-        let cell = view?.setNewReviewCell() ?? review
+        var cell = model
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.YYYY"
+        dateFormatter.dateStyle = .medium
+        cell.dateString = dateFormatter.string(from: model.date)
+        
         var allCells = sections.flatMap { $0.cells }
+        allCells.removeAll(where: { $0.id == model.id })
         allCells.append(cell)
-        
-        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
-        view?.setSections()
-    }
-    
-    func editReviewCell(for indexPath: IndexPath) {
-        
-        let selectCell = sections[indexPath.section].cells[indexPath.row]
-        let editCell = view?.setNewReviewCell() ?? review
-        var allCells = sections.flatMap { $0.cells }
-        allCells.removeAll(where: { $0.id == selectCell.id })
-        allCells.append(editCell)
         
         prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
         view?.setSections()
@@ -81,7 +73,11 @@ extension ListReviewsPresenter: ListReviewsOutput {
         
         var cell = sections[indexPath.section].cells[indexPath.row]
         cell.isRated.toggle()
-        cell.ratingValue = 0
+        if cell.ratingValue > 0 {
+            cell.ratingValue = 0
+        } else {
+            cell.ratingValue = 1
+        }
         
         var allCells = sections.flatMap { $0.cells }
         allCells.removeAll(where: { $0.id == cell.id })

@@ -4,7 +4,6 @@ class ListReviewsController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private lazy var review = Review(title: "", desription: "", date: Date(), isRated: false, ratingValue: 0)
     private lazy var barButtonItem: UIBarButtonItem = {
         UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(didTapAddReview))
     }()
@@ -27,11 +26,6 @@ class ListReviewsController: UIViewController {
         presenter.viewDidLoad()
         setup()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
-    }
 }
 
 extension ListReviewsController: ListReviewsInput {
@@ -39,15 +33,6 @@ extension ListReviewsController: ListReviewsInput {
     func setSections() {
         
         tableView.reloadData()
-    }
-    
-    func setNewReviewCell() -> Review {
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.YYYY"
-        dateFormatter.dateStyle = .medium
-        review.dateString = dateFormatter.string(from: review.date)
-        return review
     }
 }
 
@@ -57,13 +42,12 @@ extension ListReviewsController: UITableViewDelegate {
         
         let editReviewController = EditReviewController()
         
-        editReviewController.updatingReviewTitle = presenter.cellData(for: indexPath).title
-        editReviewController.updatingReviewDescription = presenter.cellData(for: indexPath).desription
-        editReviewController.updatingRatingValue = presenter.cellData(for: indexPath).ratingValue
+        let model: Review = presenter.cellData(for: indexPath)
+        editReviewController.configure(with: model)
+        editReviewController.navigationItem.title = "Edit a review"
         
         editReviewController.complitionHandler = { [weak self] review in
-            self?.review = review
-            self?.presenter.editReviewCell(for: indexPath)
+            self?.presenter.editReviewCell(review)
         }
         navigationController?.pushViewController(editReviewController, animated: true)
     }
@@ -132,12 +116,10 @@ private extension ListReviewsController {
     @objc func didTapAddReview() {
        
         let createReviewController = EditReviewController()
-        
+        createReviewController.navigationItem.title = "Create a review"
         createReviewController.complitionHandler = { [weak self] review in
-            self?.review = review
-            self?.presenter.addReviewCell()
+            self?.presenter.editReviewCell(review)
         }
-    
         navigationController?.pushViewController(createReviewController, animated: true)
     }
 }

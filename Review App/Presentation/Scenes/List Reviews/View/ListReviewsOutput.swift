@@ -8,6 +8,5 @@ protocol ListReviewsOutput: AnyObject {
     func numberOfSections() -> Int
     func deleteCell(for indexPath: IndexPath)
     func toggleRating(for indexPath: IndexPath)
-    func addReviewCell()
-    func editReviewCell(for indexPath: IndexPath)
+    func editReviewCell(_ model: Review)
 }
