@@ -27,6 +27,10 @@
 		7875DEA42906687000847920 /* ListReviewsOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875DEA32906687000847920 /* ListReviewsOutput.swift */; };
 		7877D8F029014CFE004BACDA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7877D8EF29014CFE004BACDA /* User.swift */; };
 		787914032902749C00784F35 /* ListReviewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787914022902749C00784F35 /* ListReviewsController.swift */; };
+		7879F57129221846008C87FA /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7879F57029221846008C87FA /* CoreData.framework */; };
+		7879F5AD29223EFA008C87FA /* ReviewDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7879F5AB29223EFA008C87FA /* ReviewDB.xcdatamodeld */; };
+		7879F5C829224AF7008C87FA /* ReviewDB+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7879F5C629224AF7008C87FA /* ReviewDB+CoreDataClass.swift */; };
+		7879F5C929224AF7008C87FA /* ReviewDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7879F5C729224AF7008C87FA /* ReviewDB+CoreDataProperties.swift */; };
 		787A9F722911022800698789 /* EditReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787A9F712911022800698789 /* EditReviewController.swift */; };
 		7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5B28EEF91200721A9C /* CoreDataManager.swift */; };
 		78B9B2192906ABAA007A16F6 /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */; };
@@ -59,6 +63,10 @@
 		7875DEA32906687000847920 /* ListReviewsOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReviewsOutput.swift; sourceTree = "<group>"; };
 		7877D8EF29014CFE004BACDA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		787914022902749C00784F35 /* ListReviewsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListReviewsController.swift; sourceTree = "<group>"; };
+		7879F57029221846008C87FA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7879F5AC29223EFA008C87FA /* ReviewDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReviewDB.xcdatamodel; sourceTree = "<group>"; };
+		7879F5C629224AF7008C87FA /* ReviewDB+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewDB+CoreDataClass.swift"; sourceTree = "<group>"; };
+		7879F5C729224AF7008C87FA /* ReviewDB+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		787A9F712911022800698789 /* EditReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReviewController.swift; sourceTree = "<group>"; };
 		7889EE5B28EEF91200721A9C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewTableViewCell.xib; sourceTree = "<group>"; };
@@ -72,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7879F57129221846008C87FA /* CoreData.framework in Frameworks */,
 				78D2EA5428F4509600ABF4D7 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,6 +130,7 @@
 			children = (
 				787452D328EEE8F600356591 /* Review App */,
 				787452D228EEE8F600356591 /* Products */,
+				7879F56F29221846008C87FA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +147,7 @@
 			children = (
 				7889EE6128EEFB8F00721A9C /* App */,
 				7889EE4928EEF5A400721A9C /* Models */,
+				7879F5A629223709008C87FA /* Entity */,
 				7889EE4A28EEF5B200721A9C /* Presentation */,
 				7889EE4B28EEF5D900721A9C /* Business Logic */,
 				7889EE4C28EEF5ED00721A9C /* Utils */,
@@ -164,6 +175,23 @@
 				7875DE9F290667D300847920 /* ListReviewsPresenter.swift */,
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		7879F56F29221846008C87FA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7879F57029221846008C87FA /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7879F5A629223709008C87FA /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				7879F5C629224AF7008C87FA /* ReviewDB+CoreDataClass.swift */,
+				7879F5C729224AF7008C87FA /* ReviewDB+CoreDataProperties.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		787A9F6E2910FC6100698789 /* Edit review */ = {
@@ -254,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				7889EE5B28EEF91200721A9C /* CoreDataManager.swift */,
+				7879F5AB29223EFA008C87FA /* ReviewDB.xcdatamodeld */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -384,6 +413,7 @@
 				78B9B21D2906BB05007A16F6 /* ReviewTableViewCell.swift in Sources */,
 				78754FB128F5A4410031D2EF /* AuthViewOutput.swift in Sources */,
 				78754FAB28F5A3110031D2EF /* AuthViewPresenter.swift in Sources */,
+				7879F5C829224AF7008C87FA /* ReviewDB+CoreDataClass.swift in Sources */,
 				7841E70129192F1D00BF15C9 /* EditReviewPresenter.swift in Sources */,
 				787452D528EEE8F600356591 /* AppDelegate.swift in Sources */,
 				787A9F722911022800698789 /* EditReviewController.swift in Sources */,
@@ -396,7 +426,9 @@
 				78CA6E1A2906837900559029 /* Review.swift in Sources */,
 				787452D728EEE8F600356591 /* SceneDelegate.swift in Sources */,
 				7877D8F029014CFE004BACDA /* User.swift in Sources */,
+				7879F5C929224AF7008C87FA /* ReviewDB+CoreDataProperties.swift in Sources */,
 				7875DEA22906685A00847920 /* ListReviewsInput.swift in Sources */,
+				7879F5AD29223EFA008C87FA /* ReviewDB.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +665,19 @@
 			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		7879F5AB29223EFA008C87FA /* ReviewDB.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7879F5AC29223EFA008C87FA /* ReviewDB.xcdatamodel */,
+			);
+			currentVersion = 7879F5AC29223EFA008C87FA /* ReviewDB.xcdatamodel */;
+			path = ReviewDB.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 787452C928EEE8F600356591 /* Project object */;
 }

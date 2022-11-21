@@ -51,6 +51,7 @@ class AuthViewController: UIViewController {
 extension AuthViewController: AuthViewInput {
     
     func showNewInterface() {
+        
         let storyboard = UIStoryboard(name: "Auth", bundle: nil)
         if let newViewController = storyboard.instantiateViewController(withIdentifier: "init") as? ListReviewsController {
             newViewController.modalTransitionStyle = .crossDissolve
@@ -60,16 +61,19 @@ extension AuthViewController: AuthViewInput {
     }
     
     func showAlert(title: String, message: String) {
+        
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
         present(alert, animated: true)
     }
     
     func setStateEnterButton(isEnabled: Bool) {
+        
         enterButton.isEnabled = isEnabled
     }
     
     func clearData() {
+        
         usernameField.text = ""
         passwordField.text = ""
         usernameInfoLabel.isHidden = true
@@ -77,6 +81,7 @@ extension AuthViewController: AuthViewInput {
     }
     
     func showUsernameWarning(message: String) {
+        
         usernameInfoLabel.alpha = 1
         usernameInfoLabel.isHidden = false
         usernameInfoLabel.text = message
@@ -86,6 +91,7 @@ extension AuthViewController: AuthViewInput {
     }
     
     func showPasswordWarning(message: String) {
+        
         passwordInfoLabel.alpha = 1
         passwordInfoLabel.isHidden = false
         passwordInfoLabel.text = message
@@ -95,6 +101,7 @@ extension AuthViewController: AuthViewInput {
     }
     
     func changeViewState(for type: AuthType) {
+        
         mainTitleLabel.text = type.mainTitle
         titleLabel.text = type.title
         alreadyHaveAccountLabel.text = type.isHaveAccount
@@ -106,10 +113,10 @@ extension AuthViewController: AuthViewInput {
 private extension AuthViewController {
     
     func setupUI() {
+        
         enterButton.isEnabled = false
         usernameInfoLabel.isHidden = true
         passwordInfoLabel.isHidden = true
-        
     }
 }
 

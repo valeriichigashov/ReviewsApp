@@ -112,29 +112,40 @@ class EditReviewController: UIViewController {
     }()
     
     private var editedReview: Review?
-    private var reviewDescription = ""
-    
     var complitionHandler: ((Review) -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
     }
     
-    func configure(with model: Review) {
+    func configure(with model: Review){
         
         editedReview = model
         enterNameTextField.text = model.title
-        enterReviewTextView.text = model.desription
+        enterReviewTextView.text = model.description
         enterReviewTextView.textColor = UIColor(white: 0.0, alpha: 1.0)
         ratingSlider.value = Float(model.ratingValue)
         ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
+        presenter.configureReview(with: editedReview ?? Review(title: "",
+                                                               description: "",
+                                                               date: Date(),
+                                                               isRated: false,
+                                                               ratingValue: 0))
     }
 }
 
 extension EditReviewController: EditReviewInput {
     
+    func setStateSaveButton(isEnabled: Bool) {
+        
+        barButtonItem.isEnabled = isEnabled
+    }
     
+    func setRatingValueLabel() {
+        ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
+    }
 }
 
 extension EditReviewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -165,12 +176,7 @@ extension EditReviewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         
-        reviewDescription = textView.text
-        if editedReview == nil {
-            validateData()
-        } else {
-            validateEditingData()
-        }
+        presenter.reviewDescriptionDidChange(enterReviewTextView.text)
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -186,7 +192,6 @@ extension EditReviewController: UITextViewDelegate {
         if textView.text.isEmpty {
             textView.text = "Enter review text"
             textView.textColor = UIColor(white: 0.0, alpha: 0.5)
-            barButtonItem.isEnabled = false
         }
     }
 }
@@ -232,18 +237,12 @@ private extension EditReviewController {
     
     @objc func didChangeReviewName(sender: UITextField) {
         
-        enterNameTextField.text = sender.text ?? ""
-        if editedReview == nil {
-            validateData()
-        } else {
-            validateEditingData()
-        }
+        presenter.reviewNameDidChange(enterNameTextField.text)
     }
     
     @objc func didChangeSliderValue(sender: UISlider) {
         
-        ratingValueLabel.text = "\(Int(sender.value)) / \(Int(ratingSlider.maximumValue))"
-        validateEditingData()
+        presenter.ratingSliderValueDidChange(sender.value)
     }
     
     @objc func didTapImageButton(sender: UIButton) {
@@ -257,13 +256,9 @@ private extension EditReviewController {
     
     @objc func didTapSaveReview() {
         
-        let review = Review(id: editedReview?.id ?? UUID().uuidString,
-                            title: enterNameTextField.text ?? "",
-                            desription: enterReviewTextView.text,
-                            date: Date(),
-                            isRated: ratingSlider.value >= 1,
-                            ratingValue: Int(ratingSlider.value))
-        complitionHandler?(review)
+        presenter.saveReviewButtonTapped()
+        
+        //complitionHandler?(review)
         activeIndicator()
         navigationController?.popViewController(animated: true)
     }
@@ -319,24 +314,6 @@ private extension EditReviewController {
         showView()
         addAllConstraints()
         addTapGestureToHideKeyboard()
-    }
-    
-    func validateData() {
-        
-        if !(enterNameTextField.text?.isEmpty ?? false) && !reviewDescription.isEmpty {
-            barButtonItem.isEnabled = true
-        } else {
-            barButtonItem.isEnabled = false
-        }
-    }
-    
-    func validateEditingData() {
-        
-        if (enterNameTextField.text == editedReview?.title || enterNameTextField.text == "") && (enterReviewTextView.text == editedReview?.desription || enterReviewTextView.text == "") && Int(ratingSlider.value) == editedReview?.ratingValue {
-            barButtonItem.isEnabled = false
-        } else {
-            barButtonItem.isEnabled = true
-        }
     }
     
     func activeIndicator() {
