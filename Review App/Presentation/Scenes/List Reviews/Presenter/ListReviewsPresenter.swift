@@ -89,7 +89,7 @@ extension ListReviewsPresenter: ListReviewsOutput {
         allCells.append(cell)
         
         prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
-        view?.setSections()
+        view?.setSections(sections)
     }
     
     func deleteCell(for indexPath: IndexPath){

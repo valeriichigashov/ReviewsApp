@@ -121,14 +121,4 @@ private class DataSource: UITableViewDiffableDataSource<Section, Review> {
         
         delegate?.titleForHeaderInSections(section) ?? "Title of Section"
     }
-    
-    @objc func didTapAddReview() {
-       
-        let createReviewController = EditReviewController()
-        createReviewController.navigationItem.title = "Create a review"
-        createReviewController.complitionHandler = { [weak self] review in
-            self?.presenter.editReviewCell(review)
-        }
-        navigationController?.pushViewController(createReviewController, animated: true)
-    }
 }
