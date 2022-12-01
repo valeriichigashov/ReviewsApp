@@ -15,24 +15,40 @@ class ListReviewsController: UIViewController {
         return item
     }
     
-    lazy var presenter: ListReviewsOutput = {
+    private lazy var presenter: ListReviewsOutput = {
         let presenter = ListReviewsPresenter(view: self)
         return presenter
+    }()
+    
+    private lazy var dataSource: DataSource = {
+        let datasource = DataSource(tableView: tableView, cellProvider: { (tableView, indexPath, review) -> UITableViewCell? in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ReviewTableViewCell
+            cell?.configure(with: review)
+            return cell
+        })
+        datasource.delegate = self
+        return datasource
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         presenter.viewDidLoad()
-        setup()
+        setupUI()
     }
 }
 
 extension ListReviewsController: ListReviewsInput {
     
-    func setSections() {
+    func setSections(_ model: [Section]) {
         
-        tableView.reloadData()
+        var snapshot = dataSource.snapshot()
+        snapshot.deleteAllItems()
+        model.forEach { section in
+            snapshot.appendSections([section])
+            snapshot.appendItems(section.cells)
+        }
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 
@@ -44,22 +60,17 @@ extension ListReviewsController: UITableViewDelegate {
         let model: Review = presenter.cellData(for: indexPath)
         editReviewController.configure(with: model)
         editReviewController.navigationItem.title = "Edit a review"
-        //presenter.editReviewCell(model)
-        
-//        editReviewController.complitionHandler = { [weak self] review in
-//            self?.presenter.editReviewCell(review)
-//        }
         navigationController?.pushViewController(editReviewController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
+
         let toggle = UIContextualAction(style: .normal, title: nil) {(_, _, complitionHand) in
             self.presenter.toggleRating(for: indexPath)
         }
         toggle.image = UIImage(systemName: "togglepower")
         toggle.backgroundColor = .systemGreen
-            
+
         return UISwipeActionsConfiguration(actions: [toggle])
     }
     
@@ -76,51 +87,36 @@ extension ListReviewsController: UITableViewDelegate {
     }
 }
 
-extension ListReviewsController: UITableViewDataSource {
+extension ListReviewsController: DataSourceDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func titleForHeaderInSections(_ section: Int) -> String? {
         
-        return presenter.numberOfRowsInSection(section)
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        return presenter.titleForHeaderInSection(section)
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        
-        return presenter.numberOfSections()
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ReviewTableViewCell {
-            let model: Review = presenter.cellData(for: indexPath)
-            cell.configure(with: model)
-            return cell
-        }
-        return UITableViewCell()
+        presenter.titleForHeaderInSection(section)
     }
 }
 
 private extension ListReviewsController {
     
-    func setup(){
+    func setupUI(){
         
-        tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "ReviewTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
-        
     }
     
     @objc func didTapAddReview() {
        
         let createReviewController = EditReviewController()
         createReviewController.navigationItem.title = "Create a review"
-//        createReviewController.complitionHandler = { [weak self] review in
-//            self?.presenter.editReviewCell(review)
-//        }
         navigationController?.pushViewController(createReviewController, animated: true)
+    }
+}
+
+private class DataSource: UITableViewDiffableDataSource<Section, Review> {
+    
+    weak var delegate: DataSourceDelegate?
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String {
+        
+        delegate?.titleForHeaderInSections(section) ?? "Title of Section"
     }
 }

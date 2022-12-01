@@ -1,11 +1,3 @@
-//
-//  ReviewDB+CoreDataProperties.swift
-//  Review App
-//
-//  Created by Валерий on 14.11.2022.
-//
-//
-
 import Foundation
 import CoreData
 

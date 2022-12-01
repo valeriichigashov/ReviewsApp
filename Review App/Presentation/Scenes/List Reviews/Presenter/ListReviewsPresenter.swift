@@ -1,6 +1,6 @@
 import Foundation
 
-enum Section {
+enum Section: Hashable {
     
     case favorite(_ cells: [Review])
     case unrated(_ cells: [Review])
@@ -26,18 +26,46 @@ enum Section {
 
 class ListReviewsPresenter: Subscriber {
     
-    func upate(subject: CoreDataManager) {
-        viewDidLoad()
-    }
-    
-    var coredata = CoreDataManager.instatnce
+    private var coredata = CoreDataManager.instatnce
     private var sections = [Section]()
+    
     private weak var view: ListReviewsInput?
     
     init(view: ListReviewsInput) {
         
         self.view = view
         coredata.subscribe(self)
+    }
+    
+    func update(subject: SubjectType) {
+        
+        switch subject {
+        case .updateObject(let object):
+    
+            let model = object as? Review
+            var cell = model
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.YYYY"
+            dateFormatter.dateStyle = .medium
+
+            cell?.dateString = dateFormatter.string(from: model?.date ?? Date())
+            
+            var allCells = sections.flatMap { $0.cells }
+            allCells.removeAll(where: { $0.id == model?.id })
+            allCells.append(cell ?? Review(title: "", description: "", date: Date(), isRated: false, ratingValue: 0))
+            
+            prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
+            view?.setSections(sections)
+            
+        case .deleteObject(let ids):
+    
+            var allCells = sections.flatMap { $0.cells }
+            for id in ids {
+                allCells.removeAll(where: { $0.id == id })
+            }
+            prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
+            view?.setSections(sections)
+        }
     }
 }
 
@@ -48,33 +76,12 @@ extension ListReviewsPresenter: ListReviewsOutput {
         createCells()
     }
     
-//    func editReviewCell(_ model: Review) {
-//
-//        var cell = model
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "dd.MM.YYYY"
-//        dateFormatter.dateStyle = .medium
-//        cell.dateString = dateFormatter.string(from: model.date)
-//
-//        var allCells = sections.flatMap { $0.cells }
-//        allCells.removeAll(where: { $0.id == model.id })
-//        allCells.append(cell)
-//
-//        CoreDataManager.instatnce.editObject(from: ReviewDB.self, dtoObject: cell, to: model.id)
-//
-//        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
-//        view?.setSections()
-//    }
-    
     func deleteCell(for indexPath: IndexPath){
         
         let review = sections[indexPath.section].cells[indexPath.row]
-        var allCells = sections.flatMap { $0.cells }
-        allCells.removeAll(where: { $0.id == review.id })
         
-        CoreDataManager.instatnce.deleteObject(from: ReviewDB.self, to: review.id)
-        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
-        view?.setSections()
+        let predicate = NSPredicate(format: "id = %@", review.id)
+        CoreDataManager.instatnce.deleteObject(from: ReviewDB.self, predicate)
     }
     
     func toggleRating(for indexPath: IndexPath) {
@@ -86,30 +93,12 @@ extension ListReviewsPresenter: ListReviewsOutput {
         } else {
             review.ratingValue = 1
         }
-        
-        var allCells = sections.flatMap { $0.cells }
-        allCells.removeAll(where: { $0.id == review.id })
-        allCells.append(review)
-        
-        CoreDataManager.instatnce.editObject(from: ReviewDB.self, dtoObject: review, to: review.id)
-        
-        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
-        view?.setSections()
-    }
-    
-    func numberOfSections() -> Int {
-        
-        sections.count
+        CoreDataManager.instatnce.addObject(from: ReviewDB.self, dtoObject: review)
     }
     
     func cellData(for indexPath: IndexPath) -> Review {
         
         sections[indexPath.section].cells[indexPath.row]
-    }
-    
-    func numberOfRowsInSection(_ section: Int) -> Int {
-        
-        sections[section].cells.count
     }
     
     func titleForHeaderInSection(_ section: Int) -> String? {
@@ -122,7 +111,6 @@ private extension ListReviewsPresenter {
     
     func createCells() {
         
-        //let mockData = Review.testData
         let mockData = CoreDataManager.instatnce.fetchData(from: ReviewDB.self, to: Review.self)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.YYYY"
@@ -146,7 +134,7 @@ private extension ListReviewsPresenter {
         }
         self.sections = sections
         
-        view?.setSections()
+        view?.setSections(self.sections)
     }
     
     func prepareSections(allCells: [Review]) {

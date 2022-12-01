@@ -1,11 +1,3 @@
-//
-//  ReviewDB+CoreDataClass.swift
-//  Review App
-//
-//  Created by Валерий on 14.11.2022.
-//
-//
-
 import Foundation
 import CoreData
 
@@ -22,7 +14,8 @@ public class ReviewDB: NSManagedObject {
                      date: Date,
                      dateString: String?,
                      isRated: Bool,
-                     ratingValue: Int) {
+                     ratingValue: Int,
+                     imageURL: URL?) {
 
         self.init()
         self.id = UUID(uuidString: id) ?? UUID()
@@ -32,10 +25,18 @@ public class ReviewDB: NSManagedObject {
         self.dateString = dateString
         self.isRated = isRated
         self.ratingValue = Int16(ratingValue)
+        self.imageURL = imageURL
     }
 }
 
 extension ReviewDB: DBObject {
+    
+    
+    var uuid: String {
+        
+        return id.uuidString
+    }
+    
     
     func toDTOObject() -> DTOObject {
         

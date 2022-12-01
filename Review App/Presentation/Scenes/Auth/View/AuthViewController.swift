@@ -16,7 +16,7 @@ class AuthViewController: UIViewController {
     @IBOutlet weak var usernameInfoLabel: UILabel!
     @IBOutlet weak var passwordInfoLabel: UILabel!
     
-    lazy var presenter: AuthViewOutput = {
+    private lazy var presenter: AuthViewOutput = {
         let presenter = AuthViewPresenter(authViewInputDelegate: self)
         return presenter
     }()
@@ -112,11 +112,18 @@ extension AuthViewController: AuthViewInput {
 
 private extension AuthViewController {
     
+    func addTapGestureToHideKeyboard() {
+        
+        let tapGesture = UITapGestureRecognizer(target: view, action: #selector(view.endEditing))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
     func setupUI() {
         
         enterButton.isEnabled = false
         usernameInfoLabel.isHidden = true
         passwordInfoLabel.isHidden = true
+        addTapGestureToHideKeyboard()
     }
 }
 

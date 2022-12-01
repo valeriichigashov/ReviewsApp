@@ -6,4 +6,5 @@ protocol EditReviewOutput: AnyObject {
     func ratingSliderValueDidChange(_ sliderValue: Float)
     func configureReview(with model: Review)
     func saveReviewButtonTapped()
+    func imageReviewDidChange(_ image: Data?)
 }

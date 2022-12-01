@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigateController
         window?.makeKeyAndVisible()
         
-        //showAuthStoryboard()
+//        showAuthStoryboard()
     }
     
     func showAuthStoryboard() {

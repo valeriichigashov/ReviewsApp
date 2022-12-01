@@ -2,8 +2,9 @@ import Foundation
 
 class EditReviewPresenter {
     
-   private var reviewName = ""
+    private var reviewName = ""
     private var reviewDescription = ""
+    private var imageReviewData: Data?
     private var ratingValue = 0
     private var editedReview: Review?
     private weak var view: EditReviewInput?
@@ -12,7 +13,6 @@ class EditReviewPresenter {
         
         self.view = view
     }
-    
 }
 
 extension EditReviewPresenter: EditReviewOutput {
@@ -28,9 +28,17 @@ extension EditReviewPresenter: EditReviewOutput {
     func reviewNameDidChange(_ text: String?) {
         
         reviewName = text ?? ""
-        if editedReview == nil {
+        validateData()
+        if editedReview != nil {
+            validateEditingData()
             validateData()
-        } else {
+        }
+    }
+    
+    func imageReviewDidChange(_ image: Data?) {
+        
+        imageReviewData = image
+        if editedReview != nil {
             validateEditingData()
         }
     }
@@ -38,10 +46,10 @@ extension EditReviewPresenter: EditReviewOutput {
     func reviewDescriptionDidChange(_ textView: String?) {
         
         reviewDescription = textView ?? ""
-        if editedReview == nil {
-            validateData()
-        } else {
+        validateData()
+        if editedReview != nil {
             validateEditingData()
+            validateData()
         }
     }
     
@@ -56,18 +64,17 @@ extension EditReviewPresenter: EditReviewOutput {
     
     func saveReviewButtonTapped() {
         
-        let review = Review(id: editedReview?.id ?? "",
+        var review = Review(id: editedReview?.id ?? UUID().uuidString,
                             title: reviewName,
                             description: reviewDescription,
                             date: Date(),
                             dateString: "",
                             isRated: ratingValue >= 1,
                             ratingValue: ratingValue)
-        if editedReview == nil {
-            CoreDataManager.instatnce.addObject(dtoObject: review)
-        } else {
-            CoreDataManager.instatnce.editObject(from: ReviewDB.self, dtoObject: review, to: review.id)
-        }
+        review.imageURL = ImageDataManager.instatnce.saveImage(imageReviewData, review.id, review.imageURL?.pathExtension ?? "")
+        review.imageData = imageReviewData
+        CoreDataManager.instatnce.addObject(from: ReviewDB.self, dtoObject: review)
+        view?.closeEditReviewController()
     }
 }
 
@@ -84,7 +91,10 @@ private extension EditReviewPresenter {
     
     func validateEditingData() {
         
-        if (reviewName == editedReview?.title || reviewName == "") && (reviewDescription == editedReview?.description || reviewDescription == "") && ratingValue == editedReview?.ratingValue {
+        if reviewName == editedReview?.title
+            && reviewDescription == editedReview?.description
+            && ratingValue == editedReview?.ratingValue
+            && imageReviewData == editedReview?.imageData {
             view?.setStateSaveButton(isEnabled: false)
         } else {
             view?.setStateSaveButton(isEnabled: true)

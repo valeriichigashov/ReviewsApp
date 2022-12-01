@@ -2,15 +2,14 @@ import UIKit
 
 class ReviewTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var imageCell: UIImageView!
-    @IBOutlet weak var titleCell: UILabel!
-    @IBOutlet weak var descriptionCell: UILabel!
-    @IBOutlet weak var dateCell: UILabel!
+    @IBOutlet private weak var imageCell: UIImageView!
+    @IBOutlet private weak var titleCell: UILabel!
+    @IBOutlet private weak var descriptionCell: UILabel!
+    @IBOutlet private weak var dateCell: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        setupUI()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -19,16 +18,10 @@ class ReviewTableViewCell: UITableViewCell {
     
     func configure(with model: Review) {
         
+//        print(NSHomeDirectory())
         titleCell.text = model.title
         descriptionCell.text = model.description
         dateCell.text = model.dateString
-    }
-}
-
-private extension ReviewTableViewCell {
-    
-    func setupUI() {
-        
-        imageCell.image = UIImage(systemName: "photo")
+        imageCell.image = UIImage.loadImage(url: model.imageURL)
     }
 }

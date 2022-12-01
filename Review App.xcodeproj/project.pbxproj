@@ -32,7 +32,10 @@
 		7879F5C829224AF7008C87FA /* ReviewDB+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7879F5C629224AF7008C87FA /* ReviewDB+CoreDataClass.swift */; };
 		7879F5C929224AF7008C87FA /* ReviewDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7879F5C729224AF7008C87FA /* ReviewDB+CoreDataProperties.swift */; };
 		787A9F722911022800698789 /* EditReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787A9F712911022800698789 /* EditReviewController.swift */; };
+		788963AB29364E5A007E4041 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788963AA29364E5A007E4041 /* UIImage+Ext.swift */; };
 		7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5B28EEF91200721A9C /* CoreDataManager.swift */; };
+		789AB6A52930CA3500B80B68 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AB6A42930CA3500B80B68 /* DataSourceDelegate.swift */; };
+		789AB6A9293101B400B80B68 /* ImageDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AB6A8293101B400B80B68 /* ImageDataManager.swift */; };
 		78B9B2192906ABAA007A16F6 /* ReviewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */; };
 		78B9B21D2906BB05007A16F6 /* ReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9B21C2906BB05007A16F6 /* ReviewTableViewCell.swift */; };
 		78CA6E1A2906837900559029 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CA6E192906837900559029 /* Review.swift */; };
@@ -68,7 +71,10 @@
 		7879F5C629224AF7008C87FA /* ReviewDB+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewDB+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7879F5C729224AF7008C87FA /* ReviewDB+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		787A9F712911022800698789 /* EditReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReviewController.swift; sourceTree = "<group>"; };
+		788963AA29364E5A007E4041 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		7889EE5B28EEF91200721A9C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		789AB6A42930CA3500B80B68 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
+		789AB6A8293101B400B80B68 /* ImageDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataManager.swift; sourceTree = "<group>"; };
 		78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewTableViewCell.xib; sourceTree = "<group>"; };
 		78B9B21C2906BB05007A16F6 /* ReviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTableViewCell.swift; sourceTree = "<group>"; };
 		78CA6E192906837900559029 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
@@ -162,6 +168,7 @@
 				787914022902749C00784F35 /* ListReviewsController.swift */,
 				7875DEA12906685A00847920 /* ListReviewsInput.swift */,
 				7875DEA32906687000847920 /* ListReviewsOutput.swift */,
+				789AB6A42930CA3500B80B68 /* DataSourceDelegate.swift */,
 				784D36F329029DD90001AC14 /* ViewListReviews.xib */,
 				78B9B21C2906BB05007A16F6 /* ReviewTableViewCell.swift */,
 				78B9B2182906ABAA007A16F6 /* ReviewTableViewCell.xib */,
@@ -207,8 +214,8 @@
 			isa = PBXGroup;
 			children = (
 				787A9F712911022800698789 /* EditReviewController.swift */,
-				7841E70229192FB800BF15C9 /* EditReviewOutput.swift */,
 				7841E70429192FE700BF15C9 /* EditReviewInput.swift */,
+				7841E70229192FB800BF15C9 /* EditReviewOutput.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -251,6 +258,7 @@
 		7889EE4C28EEF5ED00721A9C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				789AB6A8293101B400B80B68 /* ImageDataManager.swift */,
 				7889EE5328EEF73B00721A9C /* Extensions */,
 				7889EE5428EEF75100721A9C /* Constants */,
 			);
@@ -306,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				7873B03228F85155003C9673 /* String+Ext.swift */,
+				788963AA29364E5A007E4041 /* UIImage+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -407,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				787452D928EEE8F600356591 /* AuthViewController.swift in Sources */,
+				789AB6A52930CA3500B80B68 /* DataSourceDelegate.swift in Sources */,
 				787914032902749C00784F35 /* ListReviewsController.swift in Sources */,
 				7841E6FF29192C1200BF15C9 /* AuthService.swift in Sources */,
 				7841E70529192FE700BF15C9 /* EditReviewInput.swift in Sources */,
@@ -424,8 +434,10 @@
 				7841E70329192FB800BF15C9 /* EditReviewOutput.swift in Sources */,
 				7873B03328F85155003C9673 /* String+Ext.swift in Sources */,
 				78CA6E1A2906837900559029 /* Review.swift in Sources */,
+				788963AB29364E5A007E4041 /* UIImage+Ext.swift in Sources */,
 				787452D728EEE8F600356591 /* SceneDelegate.swift in Sources */,
 				7877D8F029014CFE004BACDA /* User.swift in Sources */,
+				789AB6A9293101B400B80B68 /* ImageDataManager.swift in Sources */,
 				7879F5C929224AF7008C87FA /* ReviewDB+CoreDataProperties.swift in Sources */,
 				7875DEA22906685A00847920 /* ListReviewsInput.swift in Sources */,
 				7879F5AD29223EFA008C87FA /* ReviewDB.xcdatamodeld in Sources */,

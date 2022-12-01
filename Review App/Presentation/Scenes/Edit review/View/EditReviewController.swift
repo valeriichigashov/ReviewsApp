@@ -111,32 +111,30 @@ class EditReviewController: UIViewController {
         return ratingValueLabel
     }()
     
-    private var editedReview: Review?
-    var complitionHandler: ((Review) -> ())?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
     }
     
-    func configure(with model: Review){
+    func configure(with model: Review) {
         
-        editedReview = model
         enterNameTextField.text = model.title
         enterReviewTextView.text = model.description
         enterReviewTextView.textColor = UIColor(white: 0.0, alpha: 1.0)
         ratingSlider.value = Float(model.ratingValue)
         ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
-        presenter.configureReview(with: editedReview ?? Review(title: "",
-                                                               description: "",
-                                                               date: Date(),
-                                                               isRated: false,
-                                                               ratingValue: 0))
+        imageButton.setImage(UIImage.loadImage(url: model.imageURL), for: .normal)
+        presenter.configureReview(with: model)
     }
 }
 
 extension EditReviewController: EditReviewInput {
+    
+    func closeEditReviewController() {
+        
+        navigationController?.popViewController(animated: true)
+    }
     
     func setStateSaveButton(isEnabled: Bool) {
         
@@ -144,6 +142,7 @@ extension EditReviewController: EditReviewInput {
     }
     
     func setRatingValueLabel() {
+        
         ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
     }
 }
@@ -154,6 +153,7 @@ extension EditReviewController: UIImagePickerControllerDelegate, UINavigationCon
         
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
             imageButton.setImage(image, for: .normal)
+            presenter.imageReviewDidChange(image.jpegData(compressionQuality: 0.5))
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -257,10 +257,7 @@ private extension EditReviewController {
     @objc func didTapSaveReview() {
         
         presenter.saveReviewButtonTapped()
-        
-        //complitionHandler?(review)
         activeIndicator()
-        navigationController?.popViewController(animated: true)
     }
     
     func addTapGestureToHideKeyboard() {
