@@ -11,41 +11,29 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListReviewsController" customModule="Review_App" customModuleProvider="target">
             <connections>
-                <outlet property="tableView" destination="pPp-1g-zau" id="xJb-k7-FOl"/>
-                <outlet property="view" destination="iN0-l3-epB" id="bRY-So-ghI"/>
+                <outlet property="tableView" destination="tqC-dH-ZRx" id="wQX-6e-upZ"/>
+                <outlet property="view" destination="jMO-4F-8M3" id="Hne-fd-XHf"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="jMO-4F-8M3">
             <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHJ-Wl-sGo">
-                    <rect key="frame" x="0.0" y="47" width="390" height="44"/>
-                    <color key="barTintColor" systemColor="systemBackgroundColor"/>
-                    <items>
-                        <navigationItem title="Reviews" id="8sx-wB-DWb">
-                            <barButtonItem key="rightBarButtonItem" systemItem="add" id="Q7k-ke-z8c"/>
-                        </navigationItem>
-                    </items>
-                </navigationBar>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pPp-1g-zau">
-                    <rect key="frame" x="3" y="91" width="386" height="714"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tqC-dH-ZRx">
+                    <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <viewLayoutGuide key="safeArea" id="Rfw-cr-x1y"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="pPp-1g-zau" secondAttribute="bottom" constant="5" id="BMi-Pc-Q6H"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="SHJ-Wl-sGo" secondAttribute="trailing" id="BTI-3M-dFc"/>
-                <constraint firstItem="SHJ-Wl-sGo" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="IBa-Rh-W07"/>
-                <constraint firstItem="pPp-1g-zau" firstAttribute="top" secondItem="SHJ-Wl-sGo" secondAttribute="bottom" symbolic="YES" id="QFV-VZ-V0J"/>
-                <constraint firstItem="SHJ-Wl-sGo" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Xcu-OT-7bT"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="pPp-1g-zau" secondAttribute="trailing" constant="1" id="du9-tN-qch"/>
-                <constraint firstItem="pPp-1g-zau" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="3" id="pe7-FS-2rp"/>
+                <constraint firstItem="tqC-dH-ZRx" firstAttribute="top" secondItem="Rfw-cr-x1y" secondAttribute="top" id="0gs-GK-Im9"/>
+                <constraint firstItem="Rfw-cr-x1y" firstAttribute="bottom" secondItem="tqC-dH-ZRx" secondAttribute="bottom" id="GgE-f0-TSr"/>
+                <constraint firstItem="Rfw-cr-x1y" firstAttribute="trailing" secondItem="tqC-dH-ZRx" secondAttribute="trailing" id="QfS-YY-dLD"/>
+                <constraint firstItem="tqC-dH-ZRx" firstAttribute="leading" secondItem="Rfw-cr-x1y" secondAttribute="leading" id="u2T-8E-T4e"/>
             </constraints>
-            <point key="canvasLocation" x="-68" y="-215"/>
+            <point key="canvasLocation" x="-2160" y="-301"/>
         </view>
     </objects>
     <resources>

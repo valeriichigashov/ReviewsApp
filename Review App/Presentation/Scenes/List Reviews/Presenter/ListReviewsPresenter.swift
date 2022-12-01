@@ -42,6 +42,22 @@ extension ListReviewsPresenter: ListReviewsOutput {
         createCells()
     }
     
+    func editReviewCell(_ model: Review) {
+        
+        var cell = model
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.YYYY"
+        dateFormatter.dateStyle = .medium
+        cell.dateString = dateFormatter.string(from: model.date)
+        
+        var allCells = sections.flatMap { $0.cells }
+        allCells.removeAll(where: { $0.id == model.id })
+        allCells.append(cell)
+        
+        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
+        view?.setSections()
+    }
+    
     func deleteCell(for indexPath: IndexPath){
         
         let cell = sections[indexPath.section].cells[indexPath.row]
@@ -57,6 +73,11 @@ extension ListReviewsPresenter: ListReviewsOutput {
         
         var cell = sections[indexPath.section].cells[indexPath.row]
         cell.isRated.toggle()
+        if cell.ratingValue > 0 {
+            cell.ratingValue = 0
+        } else {
+            cell.ratingValue = 1
+        }
         
         var allCells = sections.flatMap { $0.cells }
         allCells.removeAll(where: { $0.id == cell.id })
@@ -85,8 +106,6 @@ extension ListReviewsPresenter: ListReviewsOutput {
         
         sections[section].nameSection
     }
-    
-
 }
 
 private extension ListReviewsPresenter {

@@ -2,6 +2,21 @@ import UIKit
 
 class EditReviewController: UIViewController {
     
+    private lazy var barButtonItem: UIBarButtonItem = {
+        UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.save, target: self, action: #selector(didTapSaveReview))
+    }()
+
+    override var navigationItem: UINavigationItem {
+        let item = super.navigationItem
+        item.rightBarButtonItem = barButtonItem
+        return item
+    }
+    
+    private lazy var presenter: EditReviewOutput = {
+        let presenter = EditReviewPresenter(view: self)
+        return presenter
+    }()
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
@@ -22,12 +37,13 @@ class EditReviewController: UIViewController {
         return reviewNameLabel
     }()
     
-    private let enterNameTextField: UITextField = {
+    private lazy var enterNameTextField: UITextField = {
         let enterNameTextField = UITextField()
         enterNameTextField.placeholder = "Enter name"
         enterNameTextField.layer.borderWidth = 1
         enterNameTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: enterNameTextField.frame.height))
         enterNameTextField.leftViewMode = .always
+        enterNameTextField.addTarget(self, action: #selector(didChangeReviewName(sender:)), for: .editingChanged)
         return enterNameTextField
     }()
     
@@ -42,12 +58,11 @@ class EditReviewController: UIViewController {
         return imageButtonView
     }()
     
-    private let imageButton: UIButton = {
+    private lazy var imageButton: UIButton = {
         let imageButton = UIButton()
         let config = UIImage.SymbolConfiguration(scale: .small)
         let image = UIImage(systemName: "photo", withConfiguration: config)
         imageButton.setImage(image, for: .normal)
-//        imageButton.contentMode = .scaleAspectFill
         imageButton.imageView?.contentMode = .scaleAspectFill
         imageButton.contentVerticalAlignment = .fill
         imageButton.contentHorizontalAlignment = .fill
@@ -55,6 +70,7 @@ class EditReviewController: UIViewController {
         imageButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
         imageButton.layer.borderWidth = 2
         imageButton.layer.cornerRadius = 8
+        imageButton.addTarget(self, action: #selector(didTapImageButton(sender:)), for: .touchUpInside)
         return imageButton
     }()
     
@@ -64,12 +80,12 @@ class EditReviewController: UIViewController {
         return reviewLabel
     }()
     
-    private let enterReviewTextField: UITextView = {
-        let enterReviewTextField = UITextView()
-        enterReviewTextField.text = "Enter review text"
-        enterReviewTextField.textColor = UIColor(white: 0.0, alpha: 0.5)
-        enterReviewTextField.layer.borderWidth = 1
-        return enterReviewTextField
+    private let enterReviewTextView: UITextView = {
+        let enterReviewTextView = UITextView()
+        enterReviewTextView.text = "Enter review text"
+        enterReviewTextView.textColor = UIColor(white: 0.0, alpha: 0.5)
+        enterReviewTextView.layer.borderWidth = 1
+        return enterReviewTextView
     }()
     
     private let ratingLabel: UILabel = {
@@ -82,27 +98,80 @@ class EditReviewController: UIViewController {
         let ratingSlider = UISlider()
         ratingSlider.minimumValue = 0
         ratingSlider.maximumValue = 10
-        ratingSlider.value = 1
+        ratingSlider.value = 0
         ratingSlider.tintColor = .black
         ratingSlider.thumbTintColor = .black
-        ratingSlider.addTarget(self, action: #selector(sliderValueDidChange(sender:)), for: .valueChanged)
+        ratingSlider.addTarget(self, action: #selector(didChangeSliderValue(sender:)), for: .valueChanged)
         return ratingSlider
     }()
     
     private let ratingValueLabel: UILabel = {
         let ratingValueLabel = UILabel()
-        ratingValueLabel.text = "1 / 10"
+        ratingValueLabel.text = "0 / 10"
         return ratingValueLabel
     }()
-
+    
+    private var editedReview: Review?
+    private var reviewDescription = ""
+    
+    var complitionHandler: ((Review) -> ())?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
+    }
+    
+    func configure(with model: Review) {
+        
+        editedReview = model
+        enterNameTextField.text = model.title
+        enterReviewTextView.text = model.desription
+        enterReviewTextView.textColor = UIColor(white: 0.0, alpha: 1.0)
+        ratingSlider.value = Float(model.ratingValue)
+        ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
+    }
+}
+
+extension EditReviewController: EditReviewInput {
+    
+    
+}
+
+extension EditReviewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+            imageButton.setImage(image, for: .normal)
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension EditReviewController: UITextFieldDelegate {
+        
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        view.endEditing(true)
     }
 }
 
 extension EditReviewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        
+        reviewDescription = textView.text
+        if editedReview == nil {
+            validateData()
+        } else {
+            validateEditingData()
+        }
+    }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         
@@ -117,15 +186,8 @@ extension EditReviewController: UITextViewDelegate {
         if textView.text.isEmpty {
             textView.text = "Enter review text"
             textView.textColor = UIColor(white: 0.0, alpha: 0.5)
+            barButtonItem.isEnabled = false
         }
-    }
-}
-
-extension EditReviewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        view.endEditing(true)
     }
 }
 
@@ -139,9 +201,9 @@ private extension EditReviewController {
         scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
-
+    
     func setStackViewConstraints() {
-
+        
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
         stackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor).isActive = true
@@ -164,16 +226,50 @@ private extension EditReviewController {
     func setConstraints() {
         enterNameTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         imageButtonView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        enterReviewTextField.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        enterReviewTextView.heightAnchor.constraint(equalToConstant: 80).isActive = true
         ratingSlider.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
-    @objc func sliderValueDidChange(sender: UISlider) {
+    @objc func didChangeReviewName(sender: UITextField) {
+        
+        enterNameTextField.text = sender.text ?? ""
+        if editedReview == nil {
+            validateData()
+        } else {
+            validateEditingData()
+        }
+    }
+    
+    @objc func didChangeSliderValue(sender: UISlider) {
         
         ratingValueLabel.text = "\(Int(sender.value)) / \(Int(ratingSlider.maximumValue))"
+        validateEditingData()
+    }
+    
+    @objc func didTapImageButton(sender: UIButton) {
+        
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+    }
+    
+    @objc func didTapSaveReview() {
+        
+        let review = Review(id: editedReview?.id ?? UUID().uuidString,
+                            title: enterNameTextField.text ?? "",
+                            desription: enterReviewTextView.text,
+                            date: Date(),
+                            isRated: ratingSlider.value >= 1,
+                            ratingValue: Int(ratingSlider.value))
+        complitionHandler?(review)
+        activeIndicator()
+        navigationController?.popViewController(animated: true)
     }
     
     func addTapGestureToHideKeyboard() {
+        
         let tapGesture = UITapGestureRecognizer(target: view, action: #selector(view.endEditing))
         view.addGestureRecognizer(tapGesture)
     }
@@ -183,17 +279,17 @@ private extension EditReviewController {
         view.addSubview(scrollView)
         
         scrollView.addSubview(stackView)
-
+        
         stackView.addArrangedSubview(reviewNameLabel)
         stackView.addArrangedSubview(enterNameTextField)
-
+        
         stackView.addArrangedSubview(reviewImageLabel)
         stackView.addArrangedSubview(imageButtonView)
         imageButtonView.addSubview(imageButton)
-
+        
         stackView.addArrangedSubview(reviewLabel)
-        stackView.addArrangedSubview(enterReviewTextField)
-
+        stackView.addArrangedSubview(enterReviewTextView)
+        
         stackView.addArrangedSubview(ratingLabel)
         stackView.addArrangedSubview(ratingSlider)
         stackView.addArrangedSubview(ratingValueLabel)
@@ -216,11 +312,38 @@ private extension EditReviewController {
     func setupUI() {
         
         view.backgroundColor = .white
-        enterReviewTextField.delegate = self
+        enterReviewTextView.delegate = self
         enterNameTextField.delegate = self
+        barButtonItem.isEnabled = false
         
         showView()
         addAllConstraints()
         addTapGestureToHideKeyboard()
+    }
+    
+    func validateData() {
+        
+        if !(enterNameTextField.text?.isEmpty ?? false) && !reviewDescription.isEmpty {
+            barButtonItem.isEnabled = true
+        } else {
+            barButtonItem.isEnabled = false
+        }
+    }
+    
+    func validateEditingData() {
+        
+        if (enterNameTextField.text == editedReview?.title || enterNameTextField.text == "") && (enterReviewTextView.text == editedReview?.desription || enterReviewTextView.text == "") && Int(ratingSlider.value) == editedReview?.ratingValue {
+            barButtonItem.isEnabled = false
+        } else {
+            barButtonItem.isEnabled = true
+        }
+    }
+    
+    func activeIndicator() {
+        let activeIndicator = UIActivityIndicatorView(style: .medium)
+        activeIndicator.center = self.view.center
+        stackView.addArrangedSubview(activeIndicator)
+        
+        activeIndicator.startAnimating()
     }
 }

@@ -4,6 +4,17 @@ class ListReviewsController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    private lazy var barButtonItem: UIBarButtonItem = {
+        UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(didTapAddReview))
+    }()
+
+    override var navigationItem: UINavigationItem {
+        let item = super.navigationItem
+        item.rightBarButtonItem = barButtonItem
+        item.title = "Reviews"
+        return item
+    }
+    
     lazy var presenter: ListReviewsOutput = {
         let presenter = ListReviewsPresenter(view: self)
         return presenter
@@ -26,6 +37,20 @@ extension ListReviewsController: ListReviewsInput {
 }
 
 extension ListReviewsController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let editReviewController = EditReviewController()
+        
+        let model: Review = presenter.cellData(for: indexPath)
+        editReviewController.configure(with: model)
+        editReviewController.navigationItem.title = "Edit a review"
+        
+        editReviewController.complitionHandler = { [weak self] review in
+            self?.presenter.editReviewCell(review)
+        }
+        navigationController?.pushViewController(editReviewController, animated: true)
+    }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
@@ -82,8 +107,19 @@ extension ListReviewsController: UITableViewDataSource {
 private extension ListReviewsController {
     
     func setup(){
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UINib(nibName: "ReviewTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+    }
+    
+    @objc func didTapAddReview() {
+       
+        let createReviewController = EditReviewController()
+        createReviewController.navigationItem.title = "Create a review"
+        createReviewController.complitionHandler = { [weak self] review in
+            self?.presenter.editReviewCell(review)
+        }
+        navigationController?.pushViewController(createReviewController, animated: true)
     }
 }
