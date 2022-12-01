@@ -33,4 +33,5 @@ extension Review: DBConvertible {
         
         ReviewDB(id: id, title: title, description: description, date: date, dateString: dateString, isRated: isRated, ratingValue: ratingValue, imageURL: imageURL)
     }
+    
 }

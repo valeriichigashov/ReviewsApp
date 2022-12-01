@@ -6,4 +6,5 @@ protocol ListReviewsOutput: AnyObject {
     func titleForHeaderInSection(_ section: Int) -> String?
     func deleteCell(for indexPath: IndexPath)
     func toggleRating(for indexPath: IndexPath)
+    func editReviewCell(_ model: Review)
 }

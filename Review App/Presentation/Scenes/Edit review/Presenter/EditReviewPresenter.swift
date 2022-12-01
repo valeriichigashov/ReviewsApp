@@ -7,6 +7,7 @@ class EditReviewPresenter {
     private var imageReviewData: Data?
     private var ratingValue = 0
     private var editedReview: Review?
+
     private weak var view: EditReviewInput?
     
     init(view: EditReviewInput) {
@@ -76,6 +77,7 @@ extension EditReviewPresenter: EditReviewOutput {
         CoreDataManager.instatnce.addObject(from: ReviewDB.self, dtoObject: review)
         view?.closeEditReviewController()
     }
+
 }
 
 private extension EditReviewPresenter {
@@ -100,4 +102,5 @@ private extension EditReviewPresenter {
             view?.setStateSaveButton(isEnabled: true)
         }
     }
+
 }

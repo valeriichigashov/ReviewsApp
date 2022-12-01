@@ -113,7 +113,6 @@ class EditReviewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
@@ -126,11 +125,13 @@ class EditReviewController: UIViewController {
         ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
         imageButton.setImage(UIImage.loadImage(url: model.imageURL), for: .normal)
         presenter.configureReview(with: model)
+
     }
 }
 
 extension EditReviewController: EditReviewInput {
     
+
     func closeEditReviewController() {
         
         navigationController?.popViewController(animated: true)
@@ -192,6 +193,7 @@ extension EditReviewController: UITextViewDelegate {
         if textView.text.isEmpty {
             textView.text = "Enter review text"
             textView.textColor = UIColor(white: 0.0, alpha: 0.5)
+            barButtonItem.isEnabled = false
         }
     }
 }

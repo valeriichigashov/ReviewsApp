@@ -16,6 +16,7 @@ class ListReviewsController: UIViewController {
     }
     
     private lazy var presenter: ListReviewsOutput = {
+
         let presenter = ListReviewsPresenter(view: self)
         return presenter
     }()
@@ -113,10 +114,21 @@ private extension ListReviewsController {
 
 private class DataSource: UITableViewDiffableDataSource<Section, Review> {
     
+
     weak var delegate: DataSourceDelegate?
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String {
         
         delegate?.titleForHeaderInSections(section) ?? "Title of Section"
+    }
+    
+    @objc func didTapAddReview() {
+       
+        let createReviewController = EditReviewController()
+        createReviewController.navigationItem.title = "Create a review"
+        createReviewController.complitionHandler = { [weak self] review in
+            self?.presenter.editReviewCell(review)
+        }
+        navigationController?.pushViewController(createReviewController, animated: true)
     }
 }

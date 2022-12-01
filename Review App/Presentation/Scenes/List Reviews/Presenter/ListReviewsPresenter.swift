@@ -76,6 +76,22 @@ extension ListReviewsPresenter: ListReviewsOutput {
         createCells()
     }
     
+    func editReviewCell(_ model: Review) {
+        
+        var cell = model
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.YYYY"
+        dateFormatter.dateStyle = .medium
+        cell.dateString = dateFormatter.string(from: model.date)
+        
+        var allCells = sections.flatMap { $0.cells }
+        allCells.removeAll(where: { $0.id == model.id })
+        allCells.append(cell)
+        
+        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
+        view?.setSections()
+    }
+    
     func deleteCell(for indexPath: IndexPath){
         
         let review = sections[indexPath.section].cells[indexPath.row]
@@ -94,6 +110,7 @@ extension ListReviewsPresenter: ListReviewsOutput {
             review.ratingValue = 1
         }
         CoreDataManager.instatnce.addObject(from: ReviewDB.self, dtoObject: review)
+
     }
     
     func cellData(for indexPath: IndexPath) -> Review {
