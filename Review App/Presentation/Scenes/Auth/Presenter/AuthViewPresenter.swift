@@ -137,7 +137,7 @@ extension AuthViewPresenter: AuthViewOutput {
     }
     
     func laterButtonTapped() {
-        authViewInputDelegate?.showNewInterface()
+//        authViewInputDelegate?.showNewInterface()
     }
 }
 

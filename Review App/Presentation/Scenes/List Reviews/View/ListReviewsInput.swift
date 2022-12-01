@@ -1,5 +1,5 @@
 import Foundation
 
 protocol ListReviewsInput: AnyObject {
-    func setSections()
+    func setSections(_ model: [Section])
 }

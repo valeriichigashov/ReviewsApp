@@ -111,11 +111,6 @@ class EditReviewController: UIViewController {
         return ratingValueLabel
     }()
     
-    private var editedReview: Review?
-    private var reviewDescription = ""
-    
-    var complitionHandler: ((Review) -> ())?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -123,18 +118,34 @@ class EditReviewController: UIViewController {
     
     func configure(with model: Review) {
         
-        editedReview = model
         enterNameTextField.text = model.title
-        enterReviewTextView.text = model.desription
+        enterReviewTextView.text = model.description
         enterReviewTextView.textColor = UIColor(white: 0.0, alpha: 1.0)
         ratingSlider.value = Float(model.ratingValue)
         ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
+        imageButton.setImage(UIImage.loadImage(url: model.imageURL), for: .normal)
+        presenter.configureReview(with: model)
+
     }
 }
 
 extension EditReviewController: EditReviewInput {
     
+
+    func closeEditReviewController() {
+        
+        navigationController?.popViewController(animated: true)
+    }
     
+    func setStateSaveButton(isEnabled: Bool) {
+        
+        barButtonItem.isEnabled = isEnabled
+    }
+    
+    func setRatingValueLabel() {
+        
+        ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
+    }
 }
 
 extension EditReviewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -143,6 +154,7 @@ extension EditReviewController: UIImagePickerControllerDelegate, UINavigationCon
         
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
             imageButton.setImage(image, for: .normal)
+            presenter.imageReviewDidChange(image.jpegData(compressionQuality: 0.5))
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -165,12 +177,7 @@ extension EditReviewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         
-        reviewDescription = textView.text
-        if editedReview == nil {
-            validateData()
-        } else {
-            validateEditingData()
-        }
+        presenter.reviewDescriptionDidChange(enterReviewTextView.text)
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -232,18 +239,12 @@ private extension EditReviewController {
     
     @objc func didChangeReviewName(sender: UITextField) {
         
-        enterNameTextField.text = sender.text ?? ""
-        if editedReview == nil {
-            validateData()
-        } else {
-            validateEditingData()
-        }
+        presenter.reviewNameDidChange(enterNameTextField.text)
     }
     
     @objc func didChangeSliderValue(sender: UISlider) {
         
-        ratingValueLabel.text = "\(Int(sender.value)) / \(Int(ratingSlider.maximumValue))"
-        validateEditingData()
+        presenter.ratingSliderValueDidChange(sender.value)
     }
     
     @objc func didTapImageButton(sender: UIButton) {
@@ -257,15 +258,8 @@ private extension EditReviewController {
     
     @objc func didTapSaveReview() {
         
-        let review = Review(id: editedReview?.id ?? UUID().uuidString,
-                            title: enterNameTextField.text ?? "",
-                            desription: enterReviewTextView.text,
-                            date: Date(),
-                            isRated: ratingSlider.value >= 1,
-                            ratingValue: Int(ratingSlider.value))
-        complitionHandler?(review)
+        presenter.saveReviewButtonTapped()
         activeIndicator()
-        navigationController?.popViewController(animated: true)
     }
     
     func addTapGestureToHideKeyboard() {
@@ -319,24 +313,6 @@ private extension EditReviewController {
         showView()
         addAllConstraints()
         addTapGestureToHideKeyboard()
-    }
-    
-    func validateData() {
-        
-        if !(enterNameTextField.text?.isEmpty ?? false) && !reviewDescription.isEmpty {
-            barButtonItem.isEnabled = true
-        } else {
-            barButtonItem.isEnabled = false
-        }
-    }
-    
-    func validateEditingData() {
-        
-        if (enterNameTextField.text == editedReview?.title || enterNameTextField.text == "") && (enterReviewTextView.text == editedReview?.desription || enterReviewTextView.text == "") && Int(ratingSlider.value) == editedReview?.ratingValue {
-            barButtonItem.isEnabled = false
-        } else {
-            barButtonItem.isEnabled = true
-        }
     }
     
     func activeIndicator() {

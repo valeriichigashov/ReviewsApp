@@ -1,6 +1,6 @@
 import Foundation
 
-enum Section {
+enum Section: Hashable {
     
     case favorite(_ cells: [Review])
     case unrated(_ cells: [Review])
@@ -24,14 +24,48 @@ enum Section {
     }
 }
 
-class ListReviewsPresenter {
+class ListReviewsPresenter: Subscriber {
     
+    private var coredata = CoreDataManager.instatnce
     private var sections = [Section]()
+    
     private weak var view: ListReviewsInput?
     
     init(view: ListReviewsInput) {
         
         self.view = view
+        coredata.subscribe(self)
+    }
+    
+    func update(subject: SubjectType) {
+        
+        switch subject {
+        case .updateObject(let object):
+    
+            let model = object as? Review
+            var cell = model
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.YYYY"
+            dateFormatter.dateStyle = .medium
+
+            cell?.dateString = dateFormatter.string(from: model?.date ?? Date())
+            
+            var allCells = sections.flatMap { $0.cells }
+            allCells.removeAll(where: { $0.id == model?.id })
+            allCells.append(cell ?? Review(title: "", description: "", date: Date(), isRated: false, ratingValue: 0))
+            
+            prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
+            view?.setSections(sections)
+            
+        case .deleteObject(let ids):
+    
+            var allCells = sections.flatMap { $0.cells }
+            for id in ids {
+                allCells.removeAll(where: { $0.id == id })
+            }
+            prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
+            view?.setSections(sections)
+        }
     }
 }
 
@@ -60,46 +94,28 @@ extension ListReviewsPresenter: ListReviewsOutput {
     
     func deleteCell(for indexPath: IndexPath){
         
-        let cell = sections[indexPath.section].cells[indexPath.row]
+        let review = sections[indexPath.section].cells[indexPath.row]
         
-        var allCells = sections.flatMap { $0.cells }
-        allCells.removeAll(where: { $0.id == cell.id })
-        
-        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
-        view?.setSections()
+        let predicate = NSPredicate(format: "id = %@", review.id)
+        CoreDataManager.instatnce.deleteObject(from: ReviewDB.self, predicate)
     }
     
     func toggleRating(for indexPath: IndexPath) {
         
-        var cell = sections[indexPath.section].cells[indexPath.row]
-        cell.isRated.toggle()
-        if cell.ratingValue > 0 {
-            cell.ratingValue = 0
+        var review = sections[indexPath.section].cells[indexPath.row]
+        review.isRated.toggle()
+        if review.ratingValue > 0 {
+            review.ratingValue = 0
         } else {
-            cell.ratingValue = 1
+            review.ratingValue = 1
         }
-        
-        var allCells = sections.flatMap { $0.cells }
-        allCells.removeAll(where: { $0.id == cell.id })
-        allCells.append(cell)
-        
-        prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
-        view?.setSections()
-    }
-    
-    func numberOfSections() -> Int {
-        
-        sections.count
+        CoreDataManager.instatnce.addObject(from: ReviewDB.self, dtoObject: review)
+
     }
     
     func cellData(for indexPath: IndexPath) -> Review {
         
         sections[indexPath.section].cells[indexPath.row]
-    }
-    
-    func numberOfRowsInSection(_ section: Int) -> Int {
-        
-        sections[section].cells.count
     }
     
     func titleForHeaderInSection(_ section: Int) -> String? {
@@ -112,7 +128,7 @@ private extension ListReviewsPresenter {
     
     func createCells() {
         
-        let mockData = Review.testData
+        let mockData = CoreDataManager.instatnce.fetchData(from: ReviewDB.self, to: Review.self)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd.MM.YYYY"
         dateFormatter.dateStyle = .medium
@@ -135,7 +151,7 @@ private extension ListReviewsPresenter {
         }
         self.sections = sections
         
-        view?.setSections()
+        view?.setSections(self.sections)
     }
     
     func prepareSections(allCells: [Review]) {
