@@ -2,7 +2,8 @@ import Foundation
 
 protocol AuthViewInput: AnyObject {
     func showAlert(title: String, message: String)
-    func showNewInterface()
+    func segueActiveListReviews()
+    func segueDisactiveListReviews()
     func setStateEnterButton(isEnabled: Bool)
     func clearData()
     func changeViewState(for type: AuthType)

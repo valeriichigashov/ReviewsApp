@@ -16,9 +16,5 @@ extension ReviewDB {
     @NSManaged public var isRated: Bool
     @NSManaged public var ratingValue: Int16
     @NSManaged public var imageURL: URL?
-
-}
-
-extension ReviewDB : Identifiable {
-
+    @NSManaged public var imageData: Data?
 }

@@ -5,6 +5,7 @@
         <attribute name="dateString" optional="YES" attributeType="String"/>
         <attribute name="descriptionReview" attributeType="String"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
         <attribute name="imageURL" optional="YES" attributeType="URI"/>
         <attribute name="isRated" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="ratingValue" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>

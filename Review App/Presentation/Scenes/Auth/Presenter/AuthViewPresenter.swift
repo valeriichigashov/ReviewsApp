@@ -55,13 +55,15 @@ class AuthViewPresenter {
     
     private var authService = AuthService()
     
-    private var authType: AuthType = .signUp
+    private var authType: AuthType = .signIn
     
     private var username = ""
     private var password = ""
     
     private var isUsernameValid = false
     private var isPasswordValid = false
+    
+    private var laterSwitch = false
     
     private weak var authViewInputDelegate: AuthViewInput?
     
@@ -73,15 +75,15 @@ class AuthViewPresenter {
 extension AuthViewPresenter: AuthViewOutput {
     
     func usernameDidChange(_ text: String?) {
-        username = text ?? ""
         
+        username = text ?? ""
         validateUsername()
         validateState()
     }
     
     func passwordDidChange(_ text: String?) {
-        password = text ?? ""
         
+        password = text ?? ""
         switch authType {
         case.signUp:
             validatePassword()
@@ -93,18 +95,14 @@ extension AuthViewPresenter: AuthViewOutput {
     }
     
     func enterButtonTapped() {
+        
         switch authType {
         case.signUp:
             authService.registrationNewUser(username: username, password: password, complition: { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(_):
-                    self.authType = .signIn
-                    self.authViewInputDelegate?.clearData()
-                    self.authViewInputDelegate?.changeViewState(for: self.authType)
-                    self.authViewInputDelegate?.setStateEnterButton(isEnabled: false)
-                    self.isUsernameValid = false
-                    self.isPasswordValid = false
+                    UserDefaults.standard.setValue(false, forKey: "laterSwitch")
                 case .failure(let error):
                     self.authViewInputDelegate?.showAlert(title: "Failed to Sign Up", message: error.localizedDescription)
                 }
@@ -114,7 +112,8 @@ extension AuthViewPresenter: AuthViewOutput {
                 guard let self = self else { return }
                 switch result {
                 case .success(_):
-                    self.authViewInputDelegate?.showNewInterface()
+                    UserDefaults.standard.setValue(false, forKey: "laterSwitch")
+                    self.authViewInputDelegate?.segueActiveListReviews()
                 case .failure(let error):
                     self.authViewInputDelegate?.showAlert(title: "Failed to Sign In", message: error.localizedDescription)
                 }
@@ -123,6 +122,7 @@ extension AuthViewPresenter: AuthViewOutput {
     }
     
     func switchAuthButtonTapped() {
+        
         switch authType {
         case .signUp:
             authType = .signIn
@@ -137,22 +137,29 @@ extension AuthViewPresenter: AuthViewOutput {
     }
     
     func laterButtonTapped() {
-//        authViewInputDelegate?.showNewInterface()
+        
+        let defaults = UserDefaults.standard
+        laterSwitch = true
+        defaults.setValue(self.laterSwitch, forKey: "laterSwitch")
+        authViewInputDelegate?.segueDisactiveListReviews()
     }
 }
 
 private extension AuthViewPresenter {
     
     func setAuthViewInputDelegate(authViewInputDelegate: AuthViewInput?) {
+        
         self.authViewInputDelegate = authViewInputDelegate
     }
     
     func clearData() {
+        
         username = ""
         password = ""
     }
     
     func validateUsername() {
+        
         if username.isEmail {
             isUsernameValid = true
             authViewInputDelegate?.showUsernameWarning(message: "")
@@ -180,6 +187,7 @@ private extension AuthViewPresenter {
     }
     
     func validateState() {
+        
         let isButtonEnabled = isUsernameValid && isPasswordValid
         authViewInputDelegate?.setStateEnterButton(isEnabled: isButtonEnabled)
     }

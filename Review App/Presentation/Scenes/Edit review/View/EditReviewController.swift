@@ -113,6 +113,7 @@ class EditReviewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
     }
     
@@ -125,12 +126,10 @@ class EditReviewController: UIViewController {
         ratingValueLabel.text = "\(Int(ratingSlider.value)) / \(Int(ratingSlider.maximumValue))"
         imageButton.setImage(UIImage.loadImage(url: model.imageURL), for: .normal)
         presenter.configureReview(with: model)
-
     }
 }
 
 extension EditReviewController: EditReviewInput {
-    
 
     func closeEditReviewController() {
         
@@ -316,10 +315,10 @@ private extension EditReviewController {
     }
     
     func activeIndicator() {
+        
         let activeIndicator = UIActivityIndicatorView(style: .medium)
         activeIndicator.center = self.view.center
         stackView.addArrangedSubview(activeIndicator)
-        
         activeIndicator.startAnimating()
     }
 }

@@ -45,8 +45,8 @@ class ListReviewsPresenter: Subscriber {
             let model = object as? Review
             var cell = model
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd.MM.YYYY"
-            dateFormatter.dateStyle = .medium
+            dateFormatter.dateFormat = "dd.MM.YYYY HH:mm:ss"
+//            dateFormatter.dateStyle = .medium
 
             cell?.dateString = dateFormatter.string(from: model?.date ?? Date())
             
@@ -62,6 +62,8 @@ class ListReviewsPresenter: Subscriber {
             var allCells = sections.flatMap { $0.cells }
             for id in ids {
                 allCells.removeAll(where: { $0.id == id })
+                FirebaseDatabase().deleteObjectFromFirebase(id)
+                ImageDataManager.instatnce.deleteImage(id)
             }
             prepareSections(allCells: allCells.sorted(by: {$0.date > $1.date}))
             view?.setSections(sections)
@@ -80,8 +82,8 @@ extension ListReviewsPresenter: ListReviewsOutput {
         
         var cell = model
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.YYYY"
-        dateFormatter.dateStyle = .medium
+        dateFormatter.dateFormat = "dd.MM.YYYY HH:mm:ss"
+//        dateFormatter.dateStyle = .medium
         cell.dateString = dateFormatter.string(from: model.date)
         
         var allCells = sections.flatMap { $0.cells }
@@ -104,13 +106,13 @@ extension ListReviewsPresenter: ListReviewsOutput {
         
         var review = sections[indexPath.section].cells[indexPath.row]
         review.isRated.toggle()
+        review.date = Date()
         if review.ratingValue > 0 {
             review.ratingValue = 0
         } else {
             review.ratingValue = 1
         }
         CoreDataManager.instatnce.addObject(from: ReviewDB.self, dtoObject: review)
-
     }
     
     func cellData(for indexPath: IndexPath) -> Review {
@@ -127,15 +129,21 @@ extension ListReviewsPresenter: ListReviewsOutput {
 private extension ListReviewsPresenter {
     
     func createCells() {
-        
+    
+        view?.setStateLeftBarButtonItem(isEnabled: false)
         let mockData = CoreDataManager.instatnce.fetchData(from: ReviewDB.self, to: Review.self)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.YYYY"
-        dateFormatter.dateStyle = .medium
+        dateFormatter.dateFormat = "YYYY.MM.dd HH:mm:ss"
+//        dateFormatter.dateStyle = .medium
         var favorite = [Review]()
         var unrated = [Review]()
         
         for var review in mockData {
+            if review.imageData != nil {
+                review.imageURL = ImageDataManager.instatnce.documentDirectoryPath().appendingPathComponent("Review_\(review.id).jpeg")
+            } else {
+                review.imageURL = nil
+            }
             review.dateString = dateFormatter.string(from: review.date)
             review.isRated ? favorite.append(review) : unrated.append(review)
         }
@@ -150,6 +158,16 @@ private extension ListReviewsPresenter {
             sections.append(.unrated(unrated.sorted(by: {$0.date > $1.date})))
         }
         self.sections = sections
+        
+        view?.startAnimatingActiveIndicator()
+        FirebaseDatabase().mergeCoreDataAndFirebase(mockData) {
+            self.view?.stopAnimatingActiveIndicator()
+            self.view?.setStateLeftBarButtonItem(isEnabled: true)
+        }
+        
+        if NSObject().currentReachabilityStatus == .notReachable {
+            self.view?.stopAnimatingActiveIndicator()
+        }
         
         view?.setSections(self.sections)
     }

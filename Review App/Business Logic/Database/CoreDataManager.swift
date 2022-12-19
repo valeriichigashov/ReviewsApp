@@ -50,6 +50,21 @@ final class CoreDataManager {
         return NSEntityDescription.entity(forEntityName: entityName, in: context) ?? ReviewDB.entity()
     }
     
+    func deleteAllObjects<T: DBObject>(from type: T.Type) {
+        
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: T.getEntityName())
+        do{
+            guard let results = try context.fetch(fetchRequest) as? [T] else { return }
+            for result in results {
+                context.delete(result)
+            }
+            saveContext()
+        } catch {
+            print(error)
+        }
+    }
+    
     func fetchData<T: DBObject, U: DTOObject>(from type: T.Type, to modelType: U.Type) -> [U] {
         
         let context = persistentContainer.viewContext

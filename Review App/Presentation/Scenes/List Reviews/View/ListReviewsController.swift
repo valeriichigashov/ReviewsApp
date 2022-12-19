@@ -1,16 +1,24 @@
 import UIKit
+import Firebase
 
 class ListReviewsController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private lazy var barButtonItem: UIBarButtonItem = {
+    private lazy var rightBarButtonItem: UIBarButtonItem = {
         UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(didTapAddReview))
+    }()
+    
+    private lazy var activeIndicator: UIActivityIndicatorView = {
+        let activeIndicator = UIActivityIndicatorView(style: .medium)
+        activeIndicator.center = self.view.center
+        activeIndicator.center = self.view.center
+        return activeIndicator
     }()
 
     override var navigationItem: UINavigationItem {
         let item = super.navigationItem
-        item.rightBarButtonItem = barButtonItem
+        item.rightBarButtonItem = rightBarButtonItem
         item.title = "Reviews"
         return item
     }
@@ -37,6 +45,7 @@ class ListReviewsController: UIViewController {
         presenter.viewDidLoad()
         setupUI()
     }
+    
 }
 
 extension ListReviewsController: ListReviewsInput {
@@ -50,6 +59,21 @@ extension ListReviewsController: ListReviewsInput {
             snapshot.appendItems(section.cells)
         }
         dataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    func startAnimatingActiveIndicator() {
+        
+        activeIndicator.startAnimating()
+    }
+    
+    func stopAnimatingActiveIndicator() {
+        
+        activeIndicator.stopAnimating()
+    }
+    
+    func setStateLeftBarButtonItem(isEnabled: Bool) {
+
+        navigationItem.leftBarButtonItem?.isEnabled = isEnabled
     }
 }
 
@@ -80,7 +104,6 @@ extension ListReviewsController: UITableViewDelegate {
         let delete = UIContextualAction(style: .destructive, title: nil) {(_, _, complitionHand) in
             self.presenter.deleteCell(for: indexPath)
         }
-
         delete.image = UIImage(systemName: "trash")
         delete.backgroundColor = .red
 
@@ -102,6 +125,7 @@ private extension ListReviewsController {
         
         tableView.delegate = self
         tableView.register(UINib(nibName: "ReviewTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+        view.addSubview(activeIndicator)
     }
     
     @objc func didTapAddReview() {
@@ -114,7 +138,6 @@ private extension ListReviewsController {
 
 private class DataSource: UITableViewDiffableDataSource<Section, Review> {
     
-
     weak var delegate: DataSourceDelegate?
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String {

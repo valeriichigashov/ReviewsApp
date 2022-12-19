@@ -15,7 +15,8 @@ public class ReviewDB: NSManagedObject {
                      dateString: String?,
                      isRated: Bool,
                      ratingValue: Int,
-                     imageURL: URL?) {
+                     imageURL: URL?,
+                     imageData: Data?) {
 
         self.init()
         self.id = UUID(uuidString: id) ?? UUID()
@@ -26,17 +27,16 @@ public class ReviewDB: NSManagedObject {
         self.isRated = isRated
         self.ratingValue = Int16(ratingValue)
         self.imageURL = imageURL
+        self.imageData = imageData
     }
 }
 
 extension ReviewDB: DBObject {
     
-    
     var uuid: String {
         
         return id.uuidString
     }
-    
     
     func toDTOObject() -> DTOObject {
         

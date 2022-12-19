@@ -32,7 +32,6 @@ extension EditReviewPresenter: EditReviewOutput {
         validateData()
         if editedReview != nil {
             validateEditingData()
-            validateData()
         }
     }
     
@@ -50,7 +49,6 @@ extension EditReviewPresenter: EditReviewOutput {
         validateData()
         if editedReview != nil {
             validateEditingData()
-            validateData()
         }
     }
     
@@ -69,15 +67,33 @@ extension EditReviewPresenter: EditReviewOutput {
                             title: reviewName,
                             description: reviewDescription,
                             date: Date(),
-                            dateString: "",
                             isRated: ratingValue >= 1,
                             ratingValue: ratingValue)
-        review.imageURL = ImageDataManager.instatnce.saveImage(imageReviewData, review.id, review.imageURL?.pathExtension ?? "")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY.MM.dd HH:mm:ss"
+        review.dateString = dateFormatter.string(from: review.date)
         review.imageData = imageReviewData
+        if review.imageData != nil {
+            review.imageURL = ImageDataManager.instatnce.saveImage(imageReviewData, review.id)
+        } else {
+            review.imageURL = nil
+        }
+        
         CoreDataManager.instatnce.addObject(from: ReviewDB.self, dtoObject: review)
+        
+        if AuthService().uidUser() != "" {
+            let ref = FirebaseDatabase().database.child("User: \(AuthService().uidUser())")
+            ref.child("Review: \(review.id)").setValue(["id": review.id,
+                                                        "title": review.title,
+                                                        "description": review.description,
+                                                        "date": review.date.timeIntervalSince1970,
+                                                        "isRated": review.isRated,
+                                                        "ratingValue": review.ratingValue])
+            let db = FirebaseStorage().storage.child("User: \(AuthService().uidUser())")
+            db.child("Review_\(review.id).jpeg").putFile(from: review.imageURL ?? URL(fileURLWithPath: ""))
+        }
         view?.closeEditReviewController()
     }
-
 }
 
 private extension EditReviewPresenter {
@@ -96,11 +112,11 @@ private extension EditReviewPresenter {
         if reviewName == editedReview?.title
             && reviewDescription == editedReview?.description
             && ratingValue == editedReview?.ratingValue
-            && imageReviewData == editedReview?.imageData {
+            && imageReviewData == editedReview?.imageData
+            || (reviewName == "" || reviewDescription == "") {
             view?.setStateSaveButton(isEnabled: false)
         } else {
             view?.setStateSaveButton(isEnabled: true)
         }
     }
-
 }

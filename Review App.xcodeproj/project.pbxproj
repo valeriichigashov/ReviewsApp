@@ -32,6 +32,11 @@
 		7879F5C829224AF7008C87FA /* ReviewDB+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7879F5C629224AF7008C87FA /* ReviewDB+CoreDataClass.swift */; };
 		7879F5C929224AF7008C87FA /* ReviewDB+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7879F5C729224AF7008C87FA /* ReviewDB+CoreDataProperties.swift */; };
 		787A9F722911022800698789 /* EditReviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 787A9F712911022800698789 /* EditReviewController.swift */; };
+		788439702938E6AD00DB7AEC /* FirebaseStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7884396F2938E6AD00DB7AEC /* FirebaseStorage.swift */; };
+		788439722938EBEC00DB7AEC /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 788439712938EBEC00DB7AEC /* FirebaseDatabase */; };
+		788439742938ED5F00DB7AEC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 788439732938ED5F00DB7AEC /* FirebaseStorage */; };
+		788439782938F5EC00DB7AEC /* FirebaseDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788439772938F5EC00DB7AEC /* FirebaseDatabase.swift */; };
+		7886B426294B482C00677C8C /* NSObject+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7886B425294B482C00677C8C /* NSObject+Ext.swift */; };
 		788963AB29364E5A007E4041 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788963AA29364E5A007E4041 /* UIImage+Ext.swift */; };
 		7889EE5C28EEF91200721A9C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7889EE5B28EEF91200721A9C /* CoreDataManager.swift */; };
 		789AB6A52930CA3500B80B68 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AB6A42930CA3500B80B68 /* DataSourceDelegate.swift */; };
@@ -71,6 +76,9 @@
 		7879F5C629224AF7008C87FA /* ReviewDB+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewDB+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7879F5C729224AF7008C87FA /* ReviewDB+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewDB+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		787A9F712911022800698789 /* EditReviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditReviewController.swift; sourceTree = "<group>"; };
+		7884396F2938E6AD00DB7AEC /* FirebaseStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorage.swift; sourceTree = "<group>"; };
+		788439772938F5EC00DB7AEC /* FirebaseDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseDatabase.swift; sourceTree = "<group>"; };
+		7886B425294B482C00677C8C /* NSObject+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Ext.swift"; sourceTree = "<group>"; };
 		788963AA29364E5A007E4041 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		7889EE5B28EEF91200721A9C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		789AB6A42930CA3500B80B68 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				788439722938EBEC00DB7AEC /* FirebaseDatabase in Frameworks */,
+				788439742938ED5F00DB7AEC /* FirebaseStorage in Frameworks */,
 				7879F57129221846008C87FA /* CoreData.framework in Frameworks */,
 				78D2EA5428F4509600ABF4D7 /* FirebaseAuth in Frameworks */,
 			);
@@ -216,7 +226,6 @@
 				787A9F712911022800698789 /* EditReviewController.swift */,
 				7841E70429192FE700BF15C9 /* EditReviewInput.swift */,
 				7841E70229192FB800BF15C9 /* EditReviewOutput.swift */,
-
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -299,6 +308,8 @@
 		7889EE5128EEF71200721A9C /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				788439772938F5EC00DB7AEC /* FirebaseDatabase.swift */,
+				7884396F2938E6AD00DB7AEC /* FirebaseStorage.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -316,6 +327,7 @@
 			children = (
 				7873B03228F85155003C9673 /* String+Ext.swift */,
 				788963AA29364E5A007E4041 /* UIImage+Ext.swift */,
+				7886B425294B482C00677C8C /* NSObject+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -354,6 +366,8 @@
 			name = "Review App";
 			packageProductDependencies = (
 				78D2EA5328F4509600ABF4D7 /* FirebaseAuth */,
+				788439712938EBEC00DB7AEC /* FirebaseDatabase */,
+				788439732938ED5F00DB7AEC /* FirebaseStorage */,
 			);
 			productName = "Review App";
 			productReference = 787452D128EEE8F600356591 /* Review App.app */;
@@ -419,6 +433,7 @@
 				787452D928EEE8F600356591 /* AuthViewController.swift in Sources */,
 				789AB6A52930CA3500B80B68 /* DataSourceDelegate.swift in Sources */,
 				787914032902749C00784F35 /* ListReviewsController.swift in Sources */,
+				788439702938E6AD00DB7AEC /* FirebaseStorage.swift in Sources */,
 				7841E6FF29192C1200BF15C9 /* AuthService.swift in Sources */,
 				7841E70529192FE700BF15C9 /* EditReviewInput.swift in Sources */,
 				78B9B21D2906BB05007A16F6 /* ReviewTableViewCell.swift in Sources */,
@@ -434,6 +449,8 @@
 				7875DEA0290667D300847920 /* ListReviewsPresenter.swift in Sources */,
 				7841E70329192FB800BF15C9 /* EditReviewOutput.swift in Sources */,
 				7873B03328F85155003C9673 /* String+Ext.swift in Sources */,
+				788439782938F5EC00DB7AEC /* FirebaseDatabase.swift in Sources */,
+				7886B426294B482C00677C8C /* NSObject+Ext.swift in Sources */,
 				78CA6E1A2906837900559029 /* Review.swift in Sources */,
 				788963AB29364E5A007E4041 /* UIImage+Ext.swift in Sources */,
 				787452D728EEE8F600356591 /* SceneDelegate.swift in Sources */,
@@ -672,6 +689,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		788439712938EBEC00DB7AEC /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78D2EA5228F4509600ABF4D7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		788439732938ED5F00DB7AEC /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78D2EA5228F4509600ABF4D7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		78D2EA5328F4509600ABF4D7 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 78D2EA5228F4509600ABF4D7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

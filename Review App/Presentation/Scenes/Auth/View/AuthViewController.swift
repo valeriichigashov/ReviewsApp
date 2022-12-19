@@ -50,14 +50,14 @@ class AuthViewController: UIViewController {
 
 extension AuthViewController: AuthViewInput {
     
-    func showNewInterface() {
+    func segueActiveListReviews() {
         
-        let storyboard = UIStoryboard(name: "Auth", bundle: nil)
-        if let newViewController = storyboard.instantiateViewController(withIdentifier: "init") as? ListReviewsController {
-            newViewController.modalTransitionStyle = .crossDissolve
-            newViewController.modalPresentationStyle = .overCurrentContext
-            present(newViewController, animated: true, completion: nil)
-        }
+        NotificationCenter.default.post(name: Notification.Name("UserTappedSignIn"), object: nil)
+    }
+    
+    func segueDisactiveListReviews() {
+        
+        NotificationCenter.default.post(name: Notification.Name("UserTappedLater"), object: nil)
     }
     
     func showAlert(title: String, message: String) {

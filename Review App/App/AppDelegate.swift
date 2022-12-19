@@ -1,18 +1,32 @@
 import UIKit
-import CoreData
-import FirebaseCore
-import FirebaseAuth
-
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         FirebaseApp.configure()
+        let userDefaults = UserDefaults.standard
+
+        if (!userDefaults.bool(forKey: "hasRunBefore")) {
+            print("The app is launching for the first time. Setting UserDefaults...")
+            do {
+                try Auth.auth().signOut()
+            } catch {
+                print(error)
+            }
+            userDefaults.set(true, forKey: "hasRunBefore")
+            userDefaults.synchronize()
+
+        } else {
+            print("The app has been launched before. Loading UserDefaults...")
+        }
         return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
